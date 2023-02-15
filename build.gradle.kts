@@ -2,7 +2,7 @@
 plugins {
     id("com.android.application") version "8.0.0-beta02" apply false
     id("com.android.library") version "8.0.0-beta02" apply false
-    kotlin("android") version "1.7.20" apply false
-    kotlin("kapt") version "1.7.20" apply false
+    kotlin("android") version "1.8.10" apply false
+    kotlin("kapt") version "1.8.10" apply false
     id("com.google.dagger.hilt.android") version "2.45" apply false
 }
