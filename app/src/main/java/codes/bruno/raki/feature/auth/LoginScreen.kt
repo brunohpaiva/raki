@@ -21,11 +21,18 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import codes.bruno.raki.R
 
 @Composable
 internal fun LoginScreen() {
-    LoginForm(onLogin = {})
+    val viewModel: LoginViewModel = hiltViewModel()
+
+    LoginForm(
+        onLogin = {
+            viewModel.logIn()
+        },
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
