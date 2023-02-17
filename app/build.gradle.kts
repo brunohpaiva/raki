@@ -1,8 +1,12 @@
+import com.google.protobuf.gradle.id
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.protobuf")
 }
 
 android {
@@ -54,6 +58,7 @@ android {
 dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.androidx.composeBom))
@@ -61,10 +66,13 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
+    implementation(libs.okhttp.logging)
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
+
+    implementation(libs.protobuf)
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -75,6 +83,30 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
 
+tasks.withType<KotlinCompile>().all {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 kapt {
     correctErrorTypes = true
+}
+
+protobuf {
+    protoc {
+        // TODO: find a way to fetch via version catalog without affecting Gradle performance
+        artifact = "com.google.protobuf:protoc:3.21.12"
+    }
+
+    generateProtoTasks {
+        all().forEach {
+            it.builtins {
+                id("java") {
+                    option("lite")
+                }
+                id("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

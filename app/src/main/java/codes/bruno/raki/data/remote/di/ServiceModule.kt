@@ -1,6 +1,6 @@
 package codes.bruno.raki.data.remote.di
 
-import codes.bruno.raki.data.remote.api.MastodonService
+import codes.bruno.raki.data.remote.retrofit.MastodonService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

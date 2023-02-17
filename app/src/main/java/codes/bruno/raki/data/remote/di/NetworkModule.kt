@@ -1,5 +1,7 @@
 package codes.bruno.raki.data.remote.di
 
+import codes.bruno.raki.data.remote.retrofit.DOMAIN_PLACEHOLDER
+import codes.bruno.raki.data.remote.retrofit.InstanceDomainAuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +27,7 @@ internal object NetworkModule {
 
         return OkHttpClient.Builder().apply {
             addInterceptor(commonInterceptor)
+            addInterceptor(InstanceDomainAuthInterceptor())
         }.build()
     }
 
@@ -32,7 +35,7 @@ internal object NetworkModule {
     @Provides
     fun provideRetrofit(httpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://127.0.0.1") // Retrofit requires a non null base url.
+            .baseUrl("https://$DOMAIN_PLACEHOLDER") // Retrofit requires a non null base url.
             .client(httpClient).addConverterFactory(MoshiConverterFactory.create()).build()
     }
 }

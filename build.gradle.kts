@@ -5,4 +5,5 @@ plugins {
     kotlin("android") version "1.8.10" apply false
     kotlin("kapt") version "1.8.10" apply false
     id("com.google.dagger.hilt.android") version "2.45" apply false
+    id("com.google.protobuf") version "0.9.1" apply false
 }

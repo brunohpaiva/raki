@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">raki</string>
     <string name="log_in_button">Log in</string>
-    <string name="email_label">E-mail address</string>
-    <string name="password_label">Password</string>
+    <string name="domain_label">Domain</string>
 </resources>
