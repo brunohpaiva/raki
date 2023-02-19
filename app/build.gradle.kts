@@ -57,6 +57,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.core)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.activity.compose)
@@ -73,6 +74,8 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.protobuf)
+
+    implementation(libs.accompanist.systemuicontroller)
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

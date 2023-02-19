@@ -1,5 +1,6 @@
 [versions]
 androidx-core = "1.9.0"
+androidx-core-splashscreen = "1.0.0-beta02"
 androidx-activity = "1.6.1"
 androidx-lifecycle = "2.5.1"
 androidx-navigation = "2.5.3"
@@ -13,9 +14,11 @@ hilt = "2.45"
 retrofit = "2.9.0"
 okhttp = "4.10.0" # retrofit2 uses okhttp 3.14.9, but we are using 4.10.0 for the logging interceptor
 protobuf = "3.21.12"
+accompanist = "0.28.0"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidx-datastore" }
 
@@ -36,6 +39,8 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 
 protobuf = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
+
+accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 
 [bundles]
 compose = [
