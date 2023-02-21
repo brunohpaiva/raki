@@ -1,12 +1,9 @@
-import com.google.protobuf.gradle.id
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
-    id("com.google.dagger.hilt.android")
-    id("com.google.protobuf")
+    id("raki.android.hilt")
 }
 
 android {
@@ -36,11 +33,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -59,21 +56,13 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.runtime)
-    implementation(libs.androidx.datastore)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.androidx.composeBom))
-    implementation(libs.bundles.compose)
 
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-    implementation(libs.okhttp.logging)
-
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
-
-    implementation(libs.protobuf)
+    implementation(project(":core:design-system"))
+    implementation(project(":core:data-repository"))
+    implementation(project(":feature:auth"))
 
     implementation(libs.accompanist.systemuicontroller)
 
@@ -87,29 +76,5 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile>().all {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-kapt {
-    correctErrorTypes = true
-}
-
-protobuf {
-    protoc {
-        // TODO: find a way to fetch via version catalog without affecting Gradle performance
-        artifact = "com.google.protobuf:protoc:3.21.12"
-    }
-
-    generateProtoTasks {
-        all().forEach {
-            it.builtins {
-                id("java") {
-                    option("lite")
-                }
-                id("kotlin") {
-                    option("lite")
-                }
-            }
-        }
-    }
+    kotlinOptions.jvmTarget = "11"
 }

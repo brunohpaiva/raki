@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "mastodon_app.proto";
+
+option java_package = "codes.bruno.raki.core.data.datastore.model";
+option java_multiple_files = true;
+
+message AuthData {
+  map<string, MastodonApp> apps = 1;
+}

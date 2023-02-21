@@ -15,4 +15,13 @@ dependencyResolutionManagement {
 
 rootProject.name = "raki"
 
+includeBuild("build-logic")
 include(":app")
+include(":core:design-system")
+include(":core:domain-model")
+include(":core:domain-repository")
+include(":core:domain-usecase")
+include(":core:data-repository")
+include(":core:data-datastore")
+include(":core:data-network")
+include(":feature:auth")

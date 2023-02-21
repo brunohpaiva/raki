@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">raki</string>
-    <string name="log_in_button">Log in</string>
-    <string name="domain_label">Domain</string>
 </resources>
