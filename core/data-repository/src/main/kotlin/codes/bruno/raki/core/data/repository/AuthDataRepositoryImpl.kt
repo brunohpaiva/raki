@@ -5,7 +5,9 @@ import codes.bruno.raki.core.data.network.MastodonApiDataSource
 import codes.bruno.raki.core.data.network.model.asDomainModel
 import codes.bruno.raki.core.data.repository.model.asDatastoreModel
 import codes.bruno.raki.core.data.repository.model.asDomainModel
+import codes.bruno.raki.core.domain.model.CurrentUser
 import codes.bruno.raki.core.domain.model.MastodonApp
+import codes.bruno.raki.core.domain.model.OAuthToken
 import codes.bruno.raki.core.domain.repository.AuthDataRepository
 import javax.inject.Inject
 
@@ -16,6 +18,10 @@ internal class AuthDataRepositoryImpl @Inject constructor(
 
     override suspend fun getMastodonApp(domain: String): MastodonApp? {
         return dataStore.getMastodonApp(domain)?.asDomainModel()
+    }
+
+    override suspend fun getCurrentUser(): CurrentUser? {
+        return dataStore.getCurrentUser()?.asDomainModel()
     }
 
     override suspend fun createMastodonApp(
@@ -34,7 +40,30 @@ internal class AuthDataRepositoryImpl @Inject constructor(
         )
 
         dataStore.saveMastodonApp(networkMastodonApp.asDatastoreModel(domain))
+        dataStore.saveCurrentUser(domain)
 
         return networkMastodonApp.asDomainModel(domain)
+    }
+
+    override suspend fun createAccessToken(
+        domain: String,
+        grantType: String,
+        code: String,
+        clientId: String,
+        clientSecret: String,
+        redirectUri: String,
+        scopes: List<String>
+    ): OAuthToken {
+        val networkOAuthToken = mastodonApi.createAccessToken(
+            domain, grantType, code, clientId, clientSecret, redirectUri, scopes
+        )
+
+        dataStore.saveCurrentUser(
+            domain,
+            networkOAuthToken.token_type,
+            networkOAuthToken.access_token,
+        )
+
+        return networkOAuthToken.asDomainModel()
     }
 }

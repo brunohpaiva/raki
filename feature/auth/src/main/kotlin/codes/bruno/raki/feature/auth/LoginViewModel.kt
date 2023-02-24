@@ -1,10 +1,10 @@
 package codes.bruno.raki.feature.auth
 
-import android.util.Log
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import codes.bruno.raki.core.domain.usecase.CreateMastodonAppUseCase
-import codes.bruno.raki.core.domain.usecase.GetStoredMastodonAppUseCase
+import codes.bruno.raki.core.domain.usecase.FetchMastodonAppUseCase
+import codes.bruno.raki.core.domain.usecase.FinishAuthorizationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,23 +14,44 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class LoginViewModel @Inject constructor(
-    private val getStoredMastodonAppUseCase: GetStoredMastodonAppUseCase,
-    private val createMastodonAppUseCase: CreateMastodonAppUseCase,
+    private val fetchMastodonAppUseCase: FetchMastodonAppUseCase,
+    private val finishAuthorizationUseCase: FinishAuthorizationUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginScreenUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun logIn() = viewModelScope.launch {
+    suspend fun startAuthorization(): Uri? {
         _uiState.update { it.copy(loading = true) }
 
-        val domain = _uiState.value.domain.trim()
+        val domain = _uiState.value.domainFieldValue.trim()
+
+        return try {
+            val mastodonApp = fetchMastodonAppUseCase(domain)
+
+            Uri.Builder().run {
+                scheme("https")
+                authority(domain)
+                appendEncodedPath("oauth/authorize")
+                appendQueryParameter("client_id", mastodonApp.clientId)
+                appendQueryParameter("scope", "read write")
+                appendQueryParameter("redirect_uri", "raki://oauth2-callback")
+                appendQueryParameter("response_type", "code")
+                build()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        } finally {
+            _uiState.update { it.copy(loading = false) }
+        }
+    }
+
+    fun finishAuthorization(code: String) = viewModelScope.launch {
+        _uiState.update { it.copy(loading = true) }
 
         try {
-            val mastodonApp =
-                getStoredMastodonAppUseCase(domain) ?: createMastodonAppUseCase(domain)
-
-            Log.d("LoginViewModel", "logIn: $mastodonApp")
+            finishAuthorizationUseCase(code)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
@@ -38,13 +59,13 @@ internal class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onChangeDomain(domain: String) {
-        _uiState.update { it.copy(domain = domain) }
+    fun onChangeDomain(value: String) {
+        _uiState.update { it.copy(domainFieldValue = value) }
     }
 
 }
 
 internal data class LoginScreenUiState(
-    val domain: String = "",
+    val domainFieldValue: String = "",
     val loading: Boolean = false,
 )

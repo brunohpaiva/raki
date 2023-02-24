@@ -10,6 +10,7 @@ androidx-navigation = "2.5.3"
 androidx-hilt-navigation-compose = "1.0.0"
 androidx-datastore = "1.0.0"
 androidx-room = "2.5.0"
+androidx-browser = "1.5.0"
 
 androidx-composeBom = "2023.01.00"
 androidx-compose-compiler = "1.4.2"
@@ -31,6 +32,7 @@ androidx-datastore = { group = "androidx.datastore", name = "datastore", version
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
 androidx-room-core = { group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidx-browser" }
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation" }

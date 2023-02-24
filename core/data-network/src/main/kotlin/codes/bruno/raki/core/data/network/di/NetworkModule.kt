@@ -18,7 +18,9 @@ internal object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient(
+        instanceDomainAuthInterceptor: InstanceDomainAuthInterceptor,
+    ): OkHttpClient {
         val commonInterceptor = { chain: Interceptor.Chain ->
             val userAgent = "raki/1.0" // TODO: add version name
 
@@ -27,7 +29,7 @@ internal object NetworkModule {
 
         return OkHttpClient.Builder().apply {
             addInterceptor(commonInterceptor)
-            addInterceptor(InstanceDomainAuthInterceptor())
+            addInterceptor(instanceDomainAuthInterceptor)
         }.build()
     }
 

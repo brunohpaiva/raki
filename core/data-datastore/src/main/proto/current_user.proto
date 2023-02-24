@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "codes.bruno.raki.core.data.datastore.model";
+option java_multiple_files = true;
+
+message CurrentUser {
+  string domain = 1;
+  optional string token_type = 2;
+  optional string access_token = 3;
+}

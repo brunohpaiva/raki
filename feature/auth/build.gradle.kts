@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "codes.bruno.raki.feature.auth"
 }
+
+dependencies {
+    implementation(libs.androidx.browser)
+}
