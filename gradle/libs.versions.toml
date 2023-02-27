@@ -1,9 +1,9 @@
 [versions]
-androidGradlePlugin = "8.0.0-beta03"
+androidGradlePlugin = "8.1.0-alpha06"
 kotlin = "1.8.10"
 
 androidx-core = "1.9.0"
-androidx-core-splashscreen = "1.0.0-beta02"
+androidx-core-splashscreen = "1.0.0"
 androidx-activity = "1.6.1"
 androidx-lifecycle = "2.5.1"
 androidx-navigation = "2.5.3"
@@ -18,8 +18,10 @@ androidx-compose-compiler = "1.4.2"
 hilt = "2.45"
 retrofit = "2.9.0"
 okhttp = "4.10.0" # retrofit2 uses okhttp 3.14.9, but we are using 4.10.0 for the logging interceptor
+protobufGradlePlugin = "0.9.1"
 protobuf = "3.21.12"
 accompanist = "0.28.0"
+kspGradlePlugin = "1.8.10-1.0.9"
 
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
@@ -70,3 +72,5 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobufGradlePlugin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspGradlePlugin" }
