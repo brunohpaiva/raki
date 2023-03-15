@@ -5,9 +5,15 @@ plugins {
 
 android {
     namespace = "codes.bruno.raki.core.data.network"
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.android.desugarLibs)
+
     implementation(project(":core:domain-model"))
     implementation(project(":core:data-datastore"))
 

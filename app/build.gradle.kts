@@ -63,6 +63,7 @@ dependencies {
     implementation(project(":core:design-system"))
     implementation(project(":core:data-repository"))
     implementation(project(":feature:auth"))
+    implementation(project(":feature:timeline"))
 
     implementation(libs.accompanist.systemuicontroller)
 

@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/data-database" />
             <option value="$PROJECT_DIR$/core/data-datastore" />
             <option value="$PROJECT_DIR$/core/data-network" />
             <option value="$PROJECT_DIR$/core/data-repository" />
@@ -34,6 +35,7 @@
             <option value="$PROJECT_DIR$/core/domain-usecase" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/auth" />
+            <option value="$PROJECT_DIR$/feature/timeline" />
           </set>
         </option>
       </GradleProjectSettings>

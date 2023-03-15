@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import codes.bruno.raki.feature.auth.authFeature
+import codes.bruno.raki.feature.timeline.timelineFeature
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -26,7 +27,13 @@ internal fun App() {
             startDestination = "login",
             modifier = Modifier.padding(it),
         ) {
-            authFeature()
+            authFeature(
+                onFinishAuth = {
+                    navController.navigate("timeline")
+                },
+            )
+
+            timelineFeature()
         }
     }
 }

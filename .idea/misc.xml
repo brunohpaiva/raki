@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
-    <list size="3">
-      <item index="0" class="java.lang.String" itemvalue="dagger.Binds" />
-      <item index="1" class="java.lang.String" itemvalue="dagger.Module" />
-      <item index="2" class="java.lang.String" itemvalue="dagger.Provides" />
+    <list size="6">
+      <item index="0" class="java.lang.String" itemvalue="androidx.room.TypeConverter" />
+      <item index="1" class="java.lang.String" itemvalue="com.squareup.moshi.FromJson" />
+      <item index="2" class="java.lang.String" itemvalue="com.squareup.moshi.ToJson" />
+      <item index="3" class="java.lang.String" itemvalue="dagger.Binds" />
+      <item index="4" class="java.lang.String" itemvalue="dagger.Module" />
+      <item index="5" class="java.lang.String" itemvalue="dagger.Provides" />
     </list>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />

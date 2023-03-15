@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,7 +29,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun LoginScreen(returnedCode: String? = null) {
+internal fun LoginScreen(returnedCode: String? = null, onFinishAuth: () -> Unit) {
     val viewModel: LoginViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
 
@@ -39,9 +40,13 @@ internal fun LoginScreen(returnedCode: String? = null) {
         }
     }
 
+    val currentOnFinishAuth by rememberUpdatedState(onFinishAuth)
     LaunchedEffect(returnedCode) {
         if (returnedCode != null) {
-            viewModel.finishAuthorization(returnedCode)
+            val account = viewModel.finishAuthorization(returnedCode)
+            if (account != null) {
+                currentOnFinishAuth()
+            }
         }
     }
 

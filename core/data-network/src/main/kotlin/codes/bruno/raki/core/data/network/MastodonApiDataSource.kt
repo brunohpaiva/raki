@@ -3,6 +3,7 @@ package codes.bruno.raki.core.data.network
 import codes.bruno.raki.core.data.network.model.Account
 import codes.bruno.raki.core.data.network.model.MastodonApp
 import codes.bruno.raki.core.data.network.model.OAuthToken
+import codes.bruno.raki.core.data.network.model.Timeline
 
 interface MastodonApiDataSource {
 
@@ -25,5 +26,12 @@ interface MastodonApiDataSource {
     ): OAuthToken
 
     suspend fun verifyCredentials(): Account
+
+    suspend fun fetchTimeline(
+        limit: Int = 20,
+        minId: String? = null,
+        maxId: String? = null,
+        sinceId: String? = null,
+    ): Timeline
 
 }

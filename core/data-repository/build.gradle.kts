@@ -11,6 +11,9 @@ dependencies {
     implementation(project(":core:domain-model"))
     implementation(project(":core:domain-repository"))
 
+    implementation(project(":core:data-database"))
     implementation(project(":core:data-datastore"))
     implementation(project(":core:data-network"))
+
+    implementation(libs.androidx.paging.runtime)
 }

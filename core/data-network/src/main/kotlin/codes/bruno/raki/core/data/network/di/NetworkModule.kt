@@ -2,6 +2,8 @@ package codes.bruno.raki.core.data.network.di
 
 import codes.bruno.raki.core.data.network.retrofit.DOMAIN_PLACEHOLDER
 import codes.bruno.raki.core.data.network.retrofit.InstanceDomainAuthInterceptor
+import codes.bruno.raki.core.data.network.retrofit.OffsetDateTimeAdapter
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +40,10 @@ internal object NetworkModule {
     fun provideRetrofit(httpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://$DOMAIN_PLACEHOLDER") // Retrofit requires a non null base url.
-            .client(httpClient).addConverterFactory(MoshiConverterFactory.create()).build()
+            .client(httpClient).addConverterFactory(
+                MoshiConverterFactory.create(
+                    Moshi.Builder().add(OffsetDateTimeAdapter).build(),
+                ),
+            ).build()
     }
 }

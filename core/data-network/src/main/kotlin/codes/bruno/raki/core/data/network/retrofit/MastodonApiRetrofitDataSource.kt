@@ -4,6 +4,9 @@ import codes.bruno.raki.core.data.network.MastodonApiDataSource
 import codes.bruno.raki.core.data.network.model.Account
 import codes.bruno.raki.core.data.network.model.MastodonApp
 import codes.bruno.raki.core.data.network.model.OAuthToken
+import codes.bruno.raki.core.data.network.model.Status
+import codes.bruno.raki.core.data.network.model.Timeline
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.create
 import retrofit2.http.Field
@@ -11,6 +14,8 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,6 +45,14 @@ internal interface MastodonApiService {
 
     @GET("api/v1/accounts/verify_credentials")
     suspend fun verifyCredentials(): Account
+
+    @GET("api/v1/timelines/home")
+    suspend fun viewHomeTimeline(
+        @Query("limit") limit: Int,
+        @Query("min_id") minId: String? = null,
+        @Query("max_id") maxId: String? = null,
+        @Query("since_id") sinceId: String? = null,
+    ): Response<List<Status>>
 
 }
 
@@ -88,5 +101,41 @@ internal class MastodonApiRetrofitDataSource @Inject constructor(
 
     override suspend fun verifyCredentials(): Account {
         return service.verifyCredentials()
+    }
+
+    override suspend fun fetchTimeline(
+        limit: Int,
+        minId: String?,
+        maxId: String?,
+        sinceId: String?
+    ): Timeline {
+        val response = service.viewHomeTimeline(limit, minId, maxId, sinceId)
+        if (!response.isSuccessful) {
+            // TODO: handle errors
+            throw IOException()
+        }
+
+        val pagingKeys = parsePagingKeys(response.headers()["Link"])
+
+        return Timeline(
+            statuses = response.body() ?: emptyList(),
+            prevKey = pagingKeys.first,
+            nextKey = pagingKeys.second,
+        )
+    }
+
+    companion object {
+        private val LINK_HEADER_REGEX = "=(\\d+)>; rel=\"(\\w+)\"".toRegex()
+
+        private fun parsePagingKeys(linkHeader: String?): Pair<String?, String?> {
+            if (linkHeader == null) return null to null
+
+            val results = LINK_HEADER_REGEX.findAll(linkHeader).map { it.groupValues }
+
+            val prev = results.find { it[2] == "prev" }?.get(1)
+            val next = results.find { it[2] == "next" }?.get(1)
+
+            return prev to next
+        }
     }
 }

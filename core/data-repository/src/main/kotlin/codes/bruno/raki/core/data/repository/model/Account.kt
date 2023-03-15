@@ -1,5 +1,6 @@
 package codes.bruno.raki.core.data.repository.model
 
+import codes.bruno.raki.core.data.database.entity.Account as DatabaseAccont
 import codes.bruno.raki.core.data.network.model.Account as NetworkAccount
 import codes.bruno.raki.core.data.network.model.Field as NetworkField
 import codes.bruno.raki.core.domain.model.Account as DomainAccount
@@ -27,4 +28,13 @@ fun NetworkField.asDomainModel() = DomainField(
     name = name,
     value = value,
     verifiedAt = verified_at,
+)
+
+fun NetworkAccount.asDatabaseModel() = DatabaseAccont(
+    id = id,
+    username = username,
+    acct = acct,
+    displayName = display_name,
+    avatarUrl = avatar,
+    headerUrl = header,
 )

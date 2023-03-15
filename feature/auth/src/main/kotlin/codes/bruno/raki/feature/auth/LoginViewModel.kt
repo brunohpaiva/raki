@@ -2,14 +2,13 @@ package codes.bruno.raki.feature.auth
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import codes.bruno.raki.core.domain.model.Account
 import codes.bruno.raki.core.domain.usecase.FetchMastodonAppUseCase
 import codes.bruno.raki.core.domain.usecase.FinishAuthorizationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,13 +46,14 @@ internal class LoginViewModel @Inject constructor(
         }
     }
 
-    fun finishAuthorization(code: String) = viewModelScope.launch {
+    suspend fun finishAuthorization(code: String): Account? {
         _uiState.update { it.copy(loading = true) }
 
-        try {
+        return try {
             finishAuthorizationUseCase(code)
         } catch (e: Exception) {
             e.printStackTrace()
+            null
         } finally {
             _uiState.update { it.copy(loading = false) }
         }

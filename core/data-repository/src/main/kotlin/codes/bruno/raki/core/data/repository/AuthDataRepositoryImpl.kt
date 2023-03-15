@@ -7,7 +7,6 @@ import codes.bruno.raki.core.data.repository.model.asDatastoreModel
 import codes.bruno.raki.core.data.repository.model.asDomainModel
 import codes.bruno.raki.core.domain.model.CurrentUser
 import codes.bruno.raki.core.domain.model.MastodonApp
-import codes.bruno.raki.core.domain.model.OAuthToken
 import codes.bruno.raki.core.domain.repository.AuthDataRepository
 import javax.inject.Inject
 
@@ -29,7 +28,7 @@ internal class AuthDataRepositoryImpl @Inject constructor(
         clientName: String,
         redirectUris: String,
         scopes: List<String>,
-        website: String?
+        website: String?,
     ): MastodonApp {
         val networkMastodonApp = mastodonApi.createMastodonApp(
             domain,
@@ -52,8 +51,8 @@ internal class AuthDataRepositoryImpl @Inject constructor(
         clientId: String,
         clientSecret: String,
         redirectUri: String,
-        scopes: List<String>
-    ): OAuthToken {
+        scopes: List<String>,
+    ) {
         val networkOAuthToken = mastodonApi.createAccessToken(
             domain, grantType, code, clientId, clientSecret, redirectUri, scopes
         )
@@ -63,7 +62,5 @@ internal class AuthDataRepositoryImpl @Inject constructor(
             networkOAuthToken.token_type,
             networkOAuthToken.access_token,
         )
-
-        return networkOAuthToken.asDomainModel()
     }
 }

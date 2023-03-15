@@ -2,7 +2,6 @@ package codes.bruno.raki.core.domain.repository
 
 import codes.bruno.raki.core.domain.model.CurrentUser
 import codes.bruno.raki.core.domain.model.MastodonApp
-import codes.bruno.raki.core.domain.model.OAuthToken
 
 interface AuthDataRepository {
     suspend fun getMastodonApp(domain: String): MastodonApp?
@@ -22,5 +21,5 @@ interface AuthDataRepository {
         clientSecret: String,
         redirectUri: String,
         scopes: List<String>,
-    ): OAuthToken
+    )
 }
