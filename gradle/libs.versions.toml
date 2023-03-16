@@ -1,5 +1,5 @@
 [versions]
-androidGradlePlugin = "8.1.0-alpha08"
+androidGradlePlugin = "8.1.0-alpha09"
 kotlin = "1.8.10"
 
 androidDesugarLibs = "2.0.2"
@@ -51,7 +51,7 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 androidx-composeBom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-composeBom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-androidx-compose-ui-toolingpreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -72,7 +72,7 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 compose = [
     "androidx-compose-ui",
     "androidx-compose-ui-graphics",
-    "androidx-compose-ui-toolingpreview",
+    "androidx-compose-ui-tooling",
     "androidx-compose-material3"
 ]
 

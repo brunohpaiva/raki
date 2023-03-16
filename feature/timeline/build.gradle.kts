@@ -5,9 +5,15 @@ plugins {
 
 android {
     namespace = "codes.bruno.raki.feature.timeline"
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.android.desugarLibs)
+    
     implementation(libs.androidx.paging.compose)
     implementation(libs.coil.compose)
 }

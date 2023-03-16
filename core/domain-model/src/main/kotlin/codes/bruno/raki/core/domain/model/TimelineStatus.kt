@@ -6,6 +6,7 @@ data class TimelineStatus(
     val id: String,
     val createdAt: OffsetDateTime,
     val authorDisplayName: String,
+    val authorAcct: String,
     val authorAvatarUrl: String,
     val content: String,
     val visibility: Visibility,

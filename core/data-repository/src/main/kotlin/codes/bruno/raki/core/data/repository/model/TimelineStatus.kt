@@ -9,6 +9,7 @@ fun DatabaseTimelineStatus.asDomainModel() = DomainTimelineStatus(
     id = status.id,
     createdAt = status.createdAt,
     authorDisplayName = author.displayName,
+    authorAcct = author.acct,
     authorAvatarUrl = author.avatarUrl,
     content = status.content,
     visibility = status.visibility.asDomainModel(),
