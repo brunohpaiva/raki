@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import codes.bruno.raki.core.designsystem.R
@@ -58,7 +60,12 @@ internal fun TimelineStatus(
             }
         }
 
-        Text(text = status.content)
+        ClickableText(
+            text = status.content,
+            onClick = {
+                //
+            },
+        )
     }
 }
 
@@ -73,7 +80,9 @@ private fun TimelineStatusPreview() {
                 authorDisplayName = "Bruno Henrique Paiva",
                 authorAcct = "bruno@androiddev.social",
                 relativeCreatedAt = "38m",
-                content = "content",
+                content = buildAnnotatedString {
+                    append("content")
+                },
             )
         )
     }
