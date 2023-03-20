@@ -23,6 +23,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.core.text.getSpans
 import androidx.core.text.parseAsHtml
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import androidx.paging.map
 import codes.bruno.raki.core.domain.usecase.FetchTimelineUseCase
 import codes.bruno.raki.core.domain.usecase.FormatRelativeDateTimeUseCase
@@ -39,20 +41,22 @@ internal class TimelineViewModel @Inject constructor(
     formatRelativeDateTimeUseCase: FormatRelativeDateTimeUseCase,
 ) : ViewModel() {
 
-    val timeline = fetchTimelineUseCase().map { pagingData ->
-        pagingData.map {
-            TimelineStatusUi(
-                id = it.id,
-                authorAvatarUrl = it.authorAvatarUrl,
-                authorDisplayName = it.authorDisplayName,
-                authorAcct = it.authorAcct,
-                relativeCreatedAt = formatRelativeDateTimeUseCase(
-                    it.createdAt, OffsetDateTime.now()
-                ),
-                content = parseContent(it.content),
-            )
+    val timeline = fetchTimelineUseCase()
+        .map { pagingData ->
+            pagingData.map {
+                TimelineStatusUi(
+                    id = it.id,
+                    authorAvatarUrl = it.authorAvatarUrl,
+                    authorDisplayName = it.authorDisplayName,
+                    authorAcct = it.authorAcct,
+                    relativeCreatedAt = formatRelativeDateTimeUseCase(
+                        it.createdAt, OffsetDateTime.now()
+                    ),
+                    content = parseContent(it.content),
+                )
+            }
         }
-    }
+        .cachedIn(viewModelScope)
 
     @OptIn(ExperimentalTextApi::class)
     private suspend fun parseContent(htmlContent: String) = withContext(Dispatchers.IO) {
@@ -87,10 +91,7 @@ internal class TimelineViewModel @Inject constructor(
                             fontStyle = FontStyle.Italic,
                         )
 
-                        else -> {
-                            println("XXX: " + span.javaClass.name)
-                            continue
-                        }
+                        else -> continue
                     }
 
                     is UnderlineSpan -> SpanStyle(textDecoration = TextDecoration.Underline)
@@ -103,10 +104,7 @@ internal class TimelineViewModel @Inject constructor(
                         color = Color.Blue, // TODO
                     )
 
-                    else -> {
-                        println("XXX: " + span.javaClass.name)
-                        continue
-                    }
+                    else -> continue
                 }
 
                 addStyle(style, start, end)
