@@ -64,7 +64,9 @@ internal fun TimelineStatus(
             onClick = {
                 // TODO: handle URL click
             },
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = LocalContentColor.current,
+            ),
         )
 
         MediaAttachments(attachments = status.mediaAttachments)
