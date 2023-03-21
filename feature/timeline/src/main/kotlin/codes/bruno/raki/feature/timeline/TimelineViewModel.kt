@@ -26,6 +26,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
+import codes.bruno.raki.core.domain.model.MediaAttachmentType
+import codes.bruno.raki.core.domain.model.TimelineStatus
 import codes.bruno.raki.core.domain.usecase.FetchTimelineUseCase
 import codes.bruno.raki.core.domain.usecase.FormatRelativeDateTimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,25 +40,34 @@ import javax.inject.Inject
 @HiltViewModel
 internal class TimelineViewModel @Inject constructor(
     fetchTimelineUseCase: FetchTimelineUseCase,
-    formatRelativeDateTimeUseCase: FormatRelativeDateTimeUseCase,
+    private val formatRelativeDateTimeUseCase: FormatRelativeDateTimeUseCase,
 ) : ViewModel() {
 
     val timeline = fetchTimelineUseCase()
-        .map { pagingData ->
-            pagingData.map {
-                TimelineStatusUi(
-                    id = it.id,
-                    authorAvatarUrl = it.authorAvatarUrl,
-                    authorDisplayName = it.authorDisplayName,
-                    authorAcct = it.authorAcct,
-                    relativeCreatedAt = formatRelativeDateTimeUseCase(
-                        it.createdAt, OffsetDateTime.now()
-                    ),
-                    content = parseContent(it.content),
-                )
-            }
-        }
+        .map { it.map(::mapToUiModel) }
         .cachedIn(viewModelScope)
+
+    private suspend fun mapToUiModel(status: TimelineStatus): TimelineStatusUi {
+        return TimelineStatusUi(
+            id = status.id,
+            authorAvatarUrl = status.authorAvatarUrl,
+            authorDisplayName = status.authorDisplayName,
+            authorAcct = status.authorAcct,
+            relativeCreatedAt = formatRelativeDateTimeUseCase(
+                status.createdAt, OffsetDateTime.now()
+            ),
+            content = parseContent(status.content),
+            mediaAttachments = status.mediaAttachments.map {
+                StatusMediaAttachmentUi(
+                    id = it.id,
+                    type = it.type,
+                    url = it.url,
+                    previewUrl = it.previewUrl,
+                    description = it.description,
+                )
+            },
+        )
+    }
 
     @OptIn(ExperimentalTextApi::class)
     private suspend fun parseContent(htmlContent: String) = withContext(Dispatchers.IO) {
@@ -121,4 +132,13 @@ internal data class TimelineStatusUi(
     val authorAcct: String,
     val relativeCreatedAt: String,
     val content: AnnotatedString,
+    val mediaAttachments: List<StatusMediaAttachmentUi>,
+)
+
+internal data class StatusMediaAttachmentUi(
+    val id: String,
+    val type: MediaAttachmentType,
+    val url: String,
+    val previewUrl: String,
+    val description: String?,
 )

@@ -93,6 +93,7 @@ enum class MediaAttachmentType {
     @Json(name = "audio")
     AUDIO,
 }
+
 sealed interface MediaAttachmentMeta
 
 @JsonClass(generateAdapter = true)

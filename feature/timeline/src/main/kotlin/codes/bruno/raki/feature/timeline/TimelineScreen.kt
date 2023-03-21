@@ -20,7 +20,7 @@ internal fun TimelineScreen() {
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(timeline) { status ->
+        items(timeline, key = { it.id }) { status ->
             if (status != null) {
                 TimelineStatus(status = status)
             } else {

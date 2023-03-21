@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5202930169440cd1bdfe1396a1f02715",
+    "identityHash": "b6630f5f88ff82a75aaf877e29cba36e",
     "entities": [
       {
         "tableName": "account",
@@ -152,7 +152,7 @@
       },
       {
         "tableName": "status_media_attachment",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`status_id` TEXT NOT NULL, `attachment_id` TEXT NOT NULL, `type` TEXT NOT NULL, `url` TEXT NOT NULL, `preview_url` TEXT NOT NULL, `remote_url` TEXT, `description` TEXT, `blurhash` TEXT NOT NULL, PRIMARY KEY(`status_id`, `attachment_id`), FOREIGN KEY(`status_id`) REFERENCES `status`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`status_id` TEXT NOT NULL, `attachment_id` TEXT NOT NULL, `type` INTEGER NOT NULL, `url` TEXT NOT NULL, `preview_url` TEXT NOT NULL, `remote_url` TEXT, `description` TEXT, `blurhash` TEXT NOT NULL, PRIMARY KEY(`status_id`, `attachment_id`), FOREIGN KEY(`status_id`) REFERENCES `status`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "statusId",
@@ -169,7 +169,7 @@
           {
             "fieldPath": "type",
             "columnName": "type",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -229,7 +229,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5202930169440cd1bdfe1396a1f02715')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b6630f5f88ff82a75aaf877e29cba36e')"
     ]
   }
 }

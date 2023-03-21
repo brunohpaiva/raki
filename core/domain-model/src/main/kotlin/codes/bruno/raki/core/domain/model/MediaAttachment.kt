@@ -1,9 +1,8 @@
 package codes.bruno.raki.core.domain.model
 
-data class StatusMediaAttachment(
-    val statusId: String,
-    val attachmentId: String,
-    val type: String, // TODO
+data class MediaAttachment(
+    val id: String,
+    val type: MediaAttachmentType,
     val url: String,
     val previewUrl: String,
     val remoteUrl: String?,
@@ -11,3 +10,11 @@ data class StatusMediaAttachment(
     val description: String?,
     val blurhash: String,
 )
+
+enum class MediaAttachmentType {
+    UNKNOWN,
+    IMAGE,
+    GIFV,
+    VIDEO,
+    AUDIO,
+}

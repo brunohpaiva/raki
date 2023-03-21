@@ -11,7 +11,7 @@ data class TimelineStatus(
     val content: String,
     val visibility: Visibility,
     val sensitive: Boolean,
-    val mediaAttachments: List<StatusMediaAttachment>,
+    val mediaAttachments: List<MediaAttachment>,
     val reblogsCount: Int,
     val favouritesCount: Int,
     val repliesCount: Int,

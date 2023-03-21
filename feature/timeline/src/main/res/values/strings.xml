@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="user_avatar">User\'s avatar</string>
+    <string name="status_media_attachment">Status media attachment</string>
 </resources>
