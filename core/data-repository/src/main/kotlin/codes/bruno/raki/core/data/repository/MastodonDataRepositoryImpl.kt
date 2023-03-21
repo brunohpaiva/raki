@@ -32,7 +32,7 @@ internal class MastodonDataRepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun viewHomeTimeline(
-        limit: Int, minId: String?, maxId: String?, sinceId: String?
+        limit: Int, minId: String?, maxId: String?, sinceId: String?,
     ): Flow<PagingData<DomainTimelineStatus>> {
         return Pager(
             config = PagingConfig(pageSize = 20),
@@ -62,7 +62,7 @@ class TimelineRemoteMediator(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<String, DatabaseTimelineStatus>
+        state: PagingState<String, DatabaseTimelineStatus>,
     ): MediatorResult {
         Log.d("Raki", "RemoteMediator > load: $loadType")
 
@@ -91,6 +91,9 @@ class TimelineRemoteMediator(
 
         dataSource.save(
             statuses = timeline.statuses.map { it.asDatabaseModel() },
+            mediaAttachments = timeline.statuses.flatMap { status ->
+                status.media_attachments.map { it.asDatabaseModel(status.id) }
+            },
             accounts = timeline.statuses.map { it.account.asDatabaseModel() },
             clearOld = loadType == LoadType.REFRESH,
         )

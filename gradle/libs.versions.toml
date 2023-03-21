@@ -21,6 +21,7 @@ androidx-compose-compiler = "1.4.2"
 hilt = "2.45"
 retrofit = "2.9.0"
 okhttp = "4.10.0" # retrofit2 uses okhttp 3.14.9, but we are using 4.10.0 for the logging interceptor
+moshi = "1.14.0"
 protobufGradlePlugin = "0.9.1"
 protobuf = "3.21.12"
 accompanist = "0.28.0"
@@ -57,6 +58,8 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+moshi-adapters = { group = "com.squareup.moshi", name = "moshi-adapters", version.ref = "moshi" }
+moshi-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 
 hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }

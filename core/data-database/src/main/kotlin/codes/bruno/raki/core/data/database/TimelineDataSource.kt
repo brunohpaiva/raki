@@ -8,6 +8,7 @@ import androidx.room.withTransaction
 import codes.bruno.raki.core.data.database.dao.TimelineDao
 import codes.bruno.raki.core.data.database.entity.Account
 import codes.bruno.raki.core.data.database.entity.Status
+import codes.bruno.raki.core.data.database.entity.StatusMediaAttachment
 import codes.bruno.raki.core.data.database.entity.TimelineStatus
 import javax.inject.Inject
 
@@ -22,6 +23,7 @@ class TimelineDataSource @Inject internal constructor(
 
     suspend fun save(
         statuses: List<Status>,
+        mediaAttachments: List<StatusMediaAttachment>,
         accounts: List<Account>,
         clearOld: Boolean = false, // TODO
     ) {
@@ -32,7 +34,7 @@ class TimelineDataSource @Inject internal constructor(
                 dao.delete() // TODO: pass query
             }
 
-            dao.save(statuses, accounts)
+            dao.save(statuses, mediaAttachments, accounts)
 
             db.openHelper.writableDatabase.execSQL("PRAGMA defer_foreign_keys = OFF;")
         }

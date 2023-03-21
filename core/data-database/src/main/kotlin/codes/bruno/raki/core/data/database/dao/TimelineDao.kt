@@ -6,6 +6,7 @@ import androidx.room.Transaction
 import androidx.room.Upsert
 import codes.bruno.raki.core.data.database.entity.Account
 import codes.bruno.raki.core.data.database.entity.Status
+import codes.bruno.raki.core.data.database.entity.StatusMediaAttachment
 import codes.bruno.raki.core.data.database.entity.TimelineStatus
 
 @Dao
@@ -24,9 +25,13 @@ internal interface TimelineDao {
     suspend fun listNewer(key: String, limit: Int): List<TimelineStatus>
 
     @Upsert
-    suspend fun save(statuses: List<Status>, accounts: List<Account>)
+    suspend fun save(
+        statuses: List<Status>,
+        mediaAttachments: List<StatusMediaAttachment>,
+        accounts: List<Account>,
+    )
 
     @Query("DELETE FROM status")
-    suspend fun delete()
+    suspend fun delete() // TODO
 
 }

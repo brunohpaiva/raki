@@ -68,7 +68,7 @@ internal class MastodonApiRetrofitDataSource @Inject constructor(
         clientName: String,
         redirectUris: String,
         scopes: List<String>,
-        website: String?
+        website: String?,
     ): MastodonApp {
         return service.createApp(
             domain,
@@ -86,7 +86,7 @@ internal class MastodonApiRetrofitDataSource @Inject constructor(
         clientId: String,
         clientSecret: String,
         redirectUri: String,
-        scopes: List<String>
+        scopes: List<String>,
     ): OAuthToken {
         return service.createAccessToken(
             domain,
@@ -107,7 +107,7 @@ internal class MastodonApiRetrofitDataSource @Inject constructor(
         limit: Int,
         minId: String?,
         maxId: String?,
-        sinceId: String?
+        sinceId: String?,
     ): Timeline {
         val response = service.viewHomeTimeline(limit, minId, maxId, sinceId)
         if (!response.isSuccessful) {
@@ -124,10 +124,10 @@ internal class MastodonApiRetrofitDataSource @Inject constructor(
         )
     }
 
-    companion object {
-        private val LINK_HEADER_REGEX = "=(\\d+)>; rel=\"(\\w+)\"".toRegex()
+    private companion object {
+        val LINK_HEADER_REGEX = "=(\\d+)>; rel=\"(\\w+)\"".toRegex()
 
-        private fun parsePagingKeys(linkHeader: String?): Pair<String?, String?> {
+        fun parsePagingKeys(linkHeader: String?): Pair<String?, String?> {
             if (linkHeader == null) return null to null
 
             val results = LINK_HEADER_REGEX.findAll(linkHeader).map { it.groupValues }

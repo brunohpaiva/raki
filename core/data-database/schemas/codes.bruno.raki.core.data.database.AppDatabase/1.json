@@ -2,8 +2,58 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "397342438e38446565083b35844dbd20",
+    "identityHash": "5202930169440cd1bdfe1396a1f02715",
     "entities": [
+      {
+        "tableName": "account",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `username` TEXT NOT NULL, `acct` TEXT NOT NULL, `display_name` TEXT NOT NULL, `avatar_url` TEXT NOT NULL, `header_url` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "username",
+            "columnName": "username",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "acct",
+            "columnName": "acct",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "display_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "avatarUrl",
+            "columnName": "avatar_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "headerUrl",
+            "columnName": "header_url",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
       {
         "tableName": "status",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `uri` TEXT NOT NULL, `created_at` TEXT NOT NULL, `author_id` TEXT NOT NULL, `content` TEXT NOT NULL, `visibility` INTEGER NOT NULL, `sensitive` INTEGER NOT NULL, `reblogs_count` INTEGER NOT NULL, `favourites_count` INTEGER NOT NULL, `replies_count` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`author_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
@@ -75,7 +125,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_status_author_id",
+            "unique": false,
+            "columnNames": [
+              "author_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_status_author_id` ON `${TABLE_NAME}` (`author_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "account",
@@ -91,42 +151,54 @@
         ]
       },
       {
-        "tableName": "account",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `username` TEXT NOT NULL, `acct` TEXT NOT NULL, `display_name` TEXT NOT NULL, `avatar_url` TEXT NOT NULL, `header_url` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "status_media_attachment",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`status_id` TEXT NOT NULL, `attachment_id` TEXT NOT NULL, `type` TEXT NOT NULL, `url` TEXT NOT NULL, `preview_url` TEXT NOT NULL, `remote_url` TEXT, `description` TEXT, `blurhash` TEXT NOT NULL, PRIMARY KEY(`status_id`, `attachment_id`), FOREIGN KEY(`status_id`) REFERENCES `status`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "statusId",
+            "columnName": "status_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "username",
-            "columnName": "username",
+            "fieldPath": "attachmentId",
+            "columnName": "attachment_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "acct",
-            "columnName": "acct",
+            "fieldPath": "type",
+            "columnName": "type",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "displayName",
-            "columnName": "display_name",
+            "fieldPath": "url",
+            "columnName": "url",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "avatarUrl",
-            "columnName": "avatar_url",
+            "fieldPath": "previewUrl",
+            "columnName": "preview_url",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "headerUrl",
-            "columnName": "header_url",
+            "fieldPath": "remoteUrl",
+            "columnName": "remote_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "blurhash",
+            "columnName": "blurhash",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -134,17 +206,30 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id"
+            "status_id",
+            "attachment_id"
           ]
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "status",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "status_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '397342438e38446565083b35844dbd20')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5202930169440cd1bdfe1396a1f02715')"
     ]
   }
 }

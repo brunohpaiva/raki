@@ -1,7 +1,9 @@
 package codes.bruno.raki.core.data.repository.model
 
+import codes.bruno.raki.core.data.database.entity.StatusMediaAttachment as DatabaseStatusMediaAttachment
 import codes.bruno.raki.core.data.database.entity.TimelineStatus as DatabaseTimelineStatus
 import codes.bruno.raki.core.data.database.entity.Visibility as DatabaseVisibility
+import codes.bruno.raki.core.domain.model.StatusMediaAttachment as DomainStatusMediaAttachment
 import codes.bruno.raki.core.domain.model.TimelineStatus as DomainTimelineStatus
 import codes.bruno.raki.core.domain.model.Visibility as DomainVisibility
 
@@ -14,6 +16,7 @@ fun DatabaseTimelineStatus.asDomainModel() = DomainTimelineStatus(
     content = status.content,
     visibility = status.visibility.asDomainModel(),
     sensitive = status.sensitive,
+    mediaAttachments = mediaAttachments.map { it.asDomainModel() },
     reblogsCount = status.reblogsCount,
     favouritesCount = status.favouritesCount,
     repliesCount = status.repliesCount,
@@ -25,3 +28,14 @@ fun DatabaseVisibility.asDomainModel(): DomainVisibility = when (this) {
     DatabaseVisibility.PRIVATE -> DomainVisibility.PRIVATE
     DatabaseVisibility.DIRECT -> DomainVisibility.DIRECT
 }
+
+fun DatabaseStatusMediaAttachment.asDomainModel() = DomainStatusMediaAttachment(
+    statusId = statusId,
+    attachmentId = attachmentId,
+    type = type,
+    url = url,
+    previewUrl = previewUrl,
+    remoteUrl = remoteUrl,
+    description = description,
+    blurhash = blurhash,
+)

@@ -1,5 +1,8 @@
 package codes.bruno.raki.core.data.network.model
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class Account(
     val id: String,
     val username: String,
@@ -32,20 +35,23 @@ data class Account(
     // TODO: MutedAccount
 )
 
+@JsonClass(generateAdapter = true)
 data class CustomEmoji(
     val shortcode: String,
     val url: String,
     val static_url: String,
     val visible_in_picker: Boolean,
-    val category: String,
+    val category: String?,
 )
 
+@JsonClass(generateAdapter = true)
 data class Field(
     val name: String,
     val value: String,
     val verified_at: String?,
 )
 
+@JsonClass(generateAdapter = true)
 data class Source(
     val privacy: String, // TODO: enum
     val sensitive: Boolean,
@@ -55,13 +61,14 @@ data class Source(
     val follow_requests_count: Int,
 )
 
+@JsonClass(generateAdapter = true)
 data class Role(
     val id: Int,
     val name: String,
     val color: String,
-    val position: Int,
+    val position: Int?,
     val permissions: Int, // TODO: parse
     val highlighted: Boolean,
-    val created_at: String,
-    val updated_at: String,
+    val created_at: String?,
+    val updated_at: String?,
 )

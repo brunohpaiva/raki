@@ -1,9 +1,14 @@
 package codes.bruno.raki.core.data.network.di
 
+import codes.bruno.raki.core.data.network.model.GifMediaAttachment
+import codes.bruno.raki.core.data.network.model.ImageMediaAttachment
+import codes.bruno.raki.core.data.network.model.MediaAttachment
+import codes.bruno.raki.core.data.network.model.VideoMediaAttachment
 import codes.bruno.raki.core.data.network.retrofit.DOMAIN_PLACEHOLDER
 import codes.bruno.raki.core.data.network.retrofit.InstanceDomainAuthInterceptor
 import codes.bruno.raki.core.data.network.retrofit.OffsetDateTimeAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,7 +47,15 @@ internal object NetworkModule {
             .baseUrl("https://$DOMAIN_PLACEHOLDER") // Retrofit requires a non null base url.
             .client(httpClient).addConverterFactory(
                 MoshiConverterFactory.create(
-                    Moshi.Builder().add(OffsetDateTimeAdapter).build(),
+                    Moshi.Builder()
+                        .add(PolymorphicJsonAdapterFactory
+                            .of(MediaAttachment::class.java, "type")
+                            .withSubtype(ImageMediaAttachment::class.java, "image")
+                            .withSubtype(VideoMediaAttachment::class.java, "video")
+                            .withSubtype(GifMediaAttachment::class.java, "gifv")
+                        )
+                        .add(OffsetDateTimeAdapter)
+                        .build(),
                 ),
             ).build()
     }

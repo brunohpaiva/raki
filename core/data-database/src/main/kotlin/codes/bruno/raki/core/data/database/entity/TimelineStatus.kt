@@ -11,4 +11,9 @@ data class TimelineStatus(
         entityColumn = "id",
     )
     val author: Account,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "status_id",
+    )
+    val mediaAttachments: List<StatusMediaAttachment>,
 )

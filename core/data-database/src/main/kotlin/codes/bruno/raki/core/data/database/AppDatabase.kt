@@ -6,9 +6,14 @@ import androidx.room.TypeConverters
 import codes.bruno.raki.core.data.database.dao.TimelineDao
 import codes.bruno.raki.core.data.database.entity.Account
 import codes.bruno.raki.core.data.database.entity.Status
+import codes.bruno.raki.core.data.database.entity.StatusMediaAttachment
 
 @Database(
-    entities = [Status::class, Account::class],
+    entities = [
+        Account::class,
+        Status::class,
+        StatusMediaAttachment::class,
+    ],
     version = 1,
 )
 @TypeConverters(OffsetDateTimeTypeConverter::class)

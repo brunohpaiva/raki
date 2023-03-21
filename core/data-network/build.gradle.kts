@@ -1,6 +1,7 @@
 plugins {
     id("raki.android.library")
     id("raki.android.hilt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -20,4 +21,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
     implementation(libs.okhttp.logging)
+
+    implementation(libs.moshi.adapters)
+    ksp(libs.moshi.codegen)
 }

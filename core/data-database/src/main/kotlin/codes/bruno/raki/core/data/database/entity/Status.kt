@@ -3,6 +3,7 @@ package codes.bruno.raki.core.data.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
@@ -13,6 +14,7 @@ import java.time.OffsetDateTime
     foreignKeys = [
         ForeignKey(childColumns = ["author_id"], parentColumns = ["id"], entity = Account::class),
     ],
+    indices = [Index("author_id")],
 )
 data class Status(
     @PrimaryKey
