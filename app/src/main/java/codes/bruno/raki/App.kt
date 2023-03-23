@@ -1,8 +1,7 @@
 package codes.bruno.raki
 
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumedWindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,13 +13,13 @@ import androidx.navigation.compose.rememberNavController
 import codes.bruno.raki.feature.auth.authFeature
 import codes.bruno.raki.feature.timeline.timelineFeature
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App() {
     val navController = rememberNavController()
 
     Scaffold(
-        modifier = Modifier.consumedWindowInsets(WindowInsets.safeDrawing),
+        modifier = Modifier.consumeWindowInsets(WindowInsets.safeDrawing),
     ) {
         NavHost(
             navController = navController,
