@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import codes.bruno.raki.core.designsystem.rememberImageLoader
 import codes.bruno.raki.core.designsystem.theme.RakiTheme
 import codes.bruno.raki.core.domain.model.MediaAttachmentType
+import codes.bruno.raki.core.videoplayer.VideoPlayer
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import codes.bruno.raki.core.designsystem.R as DesignSystemR
@@ -88,7 +89,7 @@ private fun AccountAvatar(url: String, modifier: Modifier = Modifier) {
     )
 }
 
-private const val IMAGE_ASPECT_RATIO = 16F / 9F
+private const val MEDIA_ASPECT_RATIO = 16F / 9F
 
 @Composable
 private fun MediaAttachments(attachments: List<StatusMediaAttachmentUi>) {
@@ -98,12 +99,24 @@ private fun MediaAttachments(attachments: List<StatusMediaAttachmentUi>) {
             when (attachment.type) {
                 MediaAttachmentType.IMAGE -> ImageAttachment(
                     attachment = attachment,
-                    modifier = Modifier.aspectRatio(IMAGE_ASPECT_RATIO),
+                    modifier = Modifier.aspectRatio(MEDIA_ASPECT_RATIO),
                 )
 
-                MediaAttachmentType.GIFV -> GifAttachment(
+                MediaAttachmentType.GIFV -> if (attachment.url.endsWith(".gif")) {
+                    GifAttachment(
+                        attachment = attachment,
+                        modifier = Modifier.aspectRatio(MEDIA_ASPECT_RATIO),
+                    )
+                } else {
+                    VideoAttachment(
+                        attachment = attachment,
+                        modifier = Modifier.aspectRatio(MEDIA_ASPECT_RATIO),
+                    )
+                }
+
+                MediaAttachmentType.VIDEO -> VideoAttachment(
                     attachment = attachment,
-                    modifier = Modifier.aspectRatio(IMAGE_ASPECT_RATIO),
+                    modifier = Modifier.aspectRatio(MEDIA_ASPECT_RATIO),
                 )
 
                 else -> Text(text = "ATTACHMENT ${attachment.type}")
@@ -148,6 +161,17 @@ private fun GifAttachment(
         contentScale = ContentScale.Crop,
         alignment = Alignment.Center,
         imageLoader = rememberImageLoader(),
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun VideoAttachment(
+    attachment: StatusMediaAttachmentUi,
+    modifier: Modifier = Modifier,
+) {
+    VideoPlayer(
+        url = attachment.url,
         modifier = modifier,
     )
 }

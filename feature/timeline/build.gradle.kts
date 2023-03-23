@@ -13,7 +13,9 @@ android {
 
 dependencies {
     coreLibraryDesugaring(libs.android.desugarLibs)
-    
+
+    implementation(project(":core:video-player"))
+
     implementation(libs.androidx.paging.compose)
     implementation(libs.coil.compose)
 }

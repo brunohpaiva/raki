@@ -33,6 +33,7 @@
             <option value="$PROJECT_DIR$/core/domain-model" />
             <option value="$PROJECT_DIR$/core/domain-repository" />
             <option value="$PROJECT_DIR$/core/domain-usecase" />
+            <option value="$PROJECT_DIR$/core/video-player" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/auth" />
             <option value="$PROJECT_DIR$/feature/timeline" />
