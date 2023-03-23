@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import codes.bruno.raki.core.designsystem.rememberImageLoader
 import codes.bruno.raki.core.designsystem.theme.RakiTheme
 import codes.bruno.raki.core.domain.model.MediaAttachmentType
 import coil.compose.AsyncImage
@@ -82,6 +83,7 @@ private fun AccountAvatar(url: String, modifier: Modifier = Modifier) {
             .build(),
         placeholder = painterResource(DesignSystemR.drawable.missing_user_avatar),
         contentDescription = stringResource(R.string.user_avatar),
+        imageLoader = rememberImageLoader(),
         modifier = modifier.clip(RoundedCornerShape(8.dp)),
     )
 }
@@ -99,12 +101,19 @@ private fun MediaAttachments(attachments: List<StatusMediaAttachmentUi>) {
                     modifier = Modifier.aspectRatio(IMAGE_ASPECT_RATIO),
                 )
 
-                // TODO: implement other types
+                MediaAttachmentType.GIFV -> GifAttachment(
+                    attachment = attachment,
+                    modifier = Modifier.aspectRatio(IMAGE_ASPECT_RATIO),
+                )
+
                 else -> Text(text = "ATTACHMENT ${attachment.type}")
             }
         }
     }
 }
+
+// TODO: merge ImageAttachment and GifAttachment into one single composable,
+//  since they are quite the same
 
 @Composable
 private fun ImageAttachment(
@@ -120,6 +129,25 @@ private fun ImageAttachment(
             ?: stringResource(R.string.status_media_attachment),
         contentScale = ContentScale.Crop,
         alignment = Alignment.Center,
+        imageLoader = rememberImageLoader(),
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun GifAttachment(
+    attachment: StatusMediaAttachmentUi,
+    modifier: Modifier = Modifier,
+) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(attachment.url)
+            .build(),
+        contentDescription = attachment.description
+            ?: stringResource(R.string.status_media_attachment),
+        contentScale = ContentScale.Crop,
+        alignment = Alignment.Center,
+        imageLoader = rememberImageLoader(),
         modifier = modifier,
     )
 }

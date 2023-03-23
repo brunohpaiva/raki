@@ -69,7 +69,9 @@ protobuf = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", versi
 
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 
-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+coil-base = { group = "io.coil-kt", name = "coil-base", version.ref = "coil" }
+coil-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coil" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose-base", version.ref = "coil" }
 
 [bundles]
 compose = [

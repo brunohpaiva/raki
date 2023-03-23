@@ -24,4 +24,7 @@ dependencies {
 
     implementation(libs.moshi.adapters)
     ksp(libs.moshi.codegen)
+
+    implementation(libs.coil.base)
+    implementation(libs.coil.gif)
 }
