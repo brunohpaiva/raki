@@ -1,8 +1,8 @@
 [versions]
-androidGradlePlugin = "8.1.0-alpha10"
+androidGradlePlugin = "8.1.0-alpha11"
 kotlin = "1.8.10"
 
-androidDesugarLibs = "2.0.2"
+androidDesugarLibs = "2.0.3"
 androidx-core = "1.9.0"
 androidx-core-splashscreen = "1.0.0"
 androidx-activity = "1.7.0"
@@ -25,9 +25,9 @@ okhttp = "4.10.0" # retrofit2 uses okhttp 3.14.9, but we are using 4.10.0 for th
 moshi = "1.14.0"
 protobufGradlePlugin = "0.9.1"
 protobuf = "3.22.2"
-accompanist = "0.28.0"
+accompanist = "0.30.0"
 kspGradlePlugin = "1.8.10-1.0.9"
-coil = "2.2.2"
+coil = "2.3.0"
 versionsGradlePlugin = "0.42.0"
 
 [libraries]
