@@ -28,6 +28,7 @@ protobuf = "3.22.2"
 accompanist = "0.28.0"
 kspGradlePlugin = "1.8.10-1.0.9"
 coil = "2.2.2"
+versionsGradlePlugin = "0.42.0"
 
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
@@ -94,3 +95,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufGradlePlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspGradlePlugin" }
+versions = { id = "com.github.ben-manes.versions", version.ref = "versionsGradlePlugin" }
