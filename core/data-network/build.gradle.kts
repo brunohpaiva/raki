@@ -7,6 +7,10 @@ plugins {
 android {
     namespace = "codes.bruno.raki.core.data.network"
 
+    defaultConfig {
+        consumerProguardFile("consumer-proguard-rules.pro")
+    }
+
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
