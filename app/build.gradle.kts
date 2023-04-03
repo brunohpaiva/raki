@@ -23,7 +23,7 @@ android {
         }
     }
 
-    val storeFile = System.getenv("APK_SIGN_STORE_FILE")?.let { project.file(it) }
+    val storeFile = System.getenv("APK_SIGN_STORE_FILE")?.let { rootProject.file(it) }
 
     signingConfigs {
         create("release") {
