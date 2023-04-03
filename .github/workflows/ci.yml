@@ -32,7 +32,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: build with Gradle
-        run: ./gradlew :app:assembleRelease
+        run: ./gradlew :app:assembleRelease --no-daemon
         env:
           APK_SIGN_STORE_PASSWORD: ${{ secrets.APK_SIGN_STORE_PASSWORD }}
           APK_SIGN_KEY_ALIAS: ${{ secrets.APK_SIGN_KEY_ALIAS }}
