@@ -17,7 +17,7 @@ jobs:
         env:
           APK_SIGN_STORE_FILE_CONTENT: ${{ secrets.APK_SIGN_STORE_FILE_CONTENT }}
         run: |
-          echo $APK_SIGN_STORE_FILE_CONTENT | base64 --decode >> $APK_SIGN_STORE_FILE
+          echo -n "$APK_SIGN_STORE_FILE_CONTENT" | base64 --decode > $APK_SIGN_STORE_FILE
 
       - uses: actions/checkout@v3
 

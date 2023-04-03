@@ -23,6 +23,8 @@ android {
         }
     }
 
+    val storeFile = System.getenv("APK_SIGN_STORE_FILE")?.let { project.file(it) }
+
     signingConfigs {
         create("release") {
             enableV1Signing = true
@@ -30,7 +32,7 @@ android {
             enableV3Signing = true
             enableV4Signing = true
 
-            storeFile = File(System.getenv("APK_SIGN_STORE_FILE") ?: "")
+            this.storeFile = storeFile
             storePassword = System.getenv("APK_SIGN_STORE_PASSWORD")
             keyAlias = System.getenv("APK_SIGN_KEY_ALIAS")
             keyPassword = System.getenv("APK_SIGN_KEY_PASSWORD")
