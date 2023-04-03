@@ -32,8 +32,14 @@ jobs:
         run: chmod +x gradlew
 
       - name: build with Gradle
-        run: ./gradlew build
+        run: ./gradlew :app:assembleRelease
         env:
           APK_SIGN_STORE_PASSWORD: ${{ secrets.APK_SIGN_STORE_PASSWORD }}
           APK_SIGN_KEY_ALIAS: ${{ secrets.APK_SIGN_KEY_ALIAS }}
           APK_SIGN_KEY_PASSWORD: ${{ secrets.APK_SIGN_KEY_PASSWORD }}
+
+      - name: store artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: signed-apk
+          path: app/build/outputs/apk/release
