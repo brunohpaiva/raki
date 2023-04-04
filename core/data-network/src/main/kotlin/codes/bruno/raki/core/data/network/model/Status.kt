@@ -20,6 +20,7 @@ data class Status(
     val replies_count: Int,
 )
 
+@JsonClass(generateAdapter = false)
 enum class Visibility {
     @Json(name = "public")
     PUBLIC,
@@ -81,6 +82,7 @@ data class GifMediaAttachment(
     override val type: MediaAttachmentType = MediaAttachmentType.GIFV
 }
 
+@JsonClass(generateAdapter = false)
 enum class MediaAttachmentType {
     @Json(name = "unknown")
     UNKNOWN,
