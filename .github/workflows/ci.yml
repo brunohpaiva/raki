@@ -41,5 +41,5 @@ jobs:
       - name: store artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: signed-apk
+          name: release-build-outputs
           path: app/build/outputs/apk/release
