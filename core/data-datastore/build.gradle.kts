@@ -8,6 +8,10 @@ plugins {
 
 android {
     namespace = "codes.bruno.raki.core.data.datastore"
+
+    defaultConfig {
+        consumerProguardFile("consumer-proguard-rules.pro")
+    }
 }
 
 dependencies {
