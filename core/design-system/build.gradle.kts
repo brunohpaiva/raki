@@ -10,6 +10,8 @@ android {
 
 dependencies {
     implementation(libs.androidx.core)
+    implementation(libs.accompanist.systemuicontroller)
+
     api(libs.androidx.compose.material3)
     api(libs.androidx.compose.ui.tooling)
 
