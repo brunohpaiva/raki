@@ -1,6 +1,9 @@
 package codes.bruno.raki
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -9,6 +12,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
@@ -37,6 +41,14 @@ class MainActivity : ComponentActivity() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.onEach { uiState = it }.collect()
             }
+        }
+
+        splashScreen.setOnExitAnimationListener { provider ->
+            ObjectAnimator.ofFloat(provider.view, View.ALPHA, 0F).apply {
+                interpolator = AccelerateDecelerateInterpolator()
+                duration = 400L
+                doOnEnd { provider.remove() }
+            }.start()
         }
 
         splashScreen.setKeepOnScreenCondition {
