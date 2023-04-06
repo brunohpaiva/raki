@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -13,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import codes.bruno.raki.core.designsystem.theme.RakiTheme
+import codes.bruno.raki.ui.App
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -23,6 +26,7 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels()
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -36,17 +40,19 @@ class MainActivity : ComponentActivity() {
         }
 
         splashScreen.setKeepOnScreenCondition {
-            when (uiState) {
-                MainActivityUiState.Loading -> true
-                MainActivityUiState.Success -> false
-            }
+            uiState == MainActivityUiState.Loading
         }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             RakiTheme {
-                App()
+                val state = uiState // Smart cast
+
+                App(
+                    windowSizeClass = calculateWindowSizeClass(this),
+                    isLoggedIn = state is MainActivityUiState.Success && state.isLoggedIn,
+                )
             }
         }
     }

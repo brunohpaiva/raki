@@ -1,23 +1,34 @@
 package codes.bruno.raki
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import androidx.lifecycle.viewModelScope
+import codes.bruno.raki.core.domain.usecase.auth.IsLoggedInFlowUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-internal class MainActivityViewModel : ViewModel() {
+@HiltViewModel
+internal class MainActivityViewModel @Inject constructor(
+    isLoggedInFlowUseCase: IsLoggedInFlowUseCase,
+) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<MainActivityUiState>(MainActivityUiState.Loading)
-    val uiState = _uiState.asStateFlow()
-
-    init {
-        // TODO: load auth data and check if it's logged in
-        _uiState.update { MainActivityUiState.Success }
-    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val uiState = isLoggedInFlowUseCase().mapLatest { isLoggedIn ->
+        MainActivityUiState.Success(isLoggedIn = isLoggedIn)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = MainActivityUiState.Loading,
+    )
 
 }
 
-sealed interface MainActivityUiState {
+internal sealed interface MainActivityUiState {
     object Loading : MainActivityUiState
-    object Success : MainActivityUiState
+    data class Success(
+        val isLoggedIn: Boolean,
+    ) : MainActivityUiState
 }

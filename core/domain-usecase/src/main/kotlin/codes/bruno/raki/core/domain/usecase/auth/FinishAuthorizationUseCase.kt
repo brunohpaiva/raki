@@ -1,7 +1,8 @@
-package codes.bruno.raki.core.domain.usecase
+package codes.bruno.raki.core.domain.usecase.auth
 
 import codes.bruno.raki.core.domain.model.Account
 import codes.bruno.raki.core.domain.repository.AuthDataRepository
+import codes.bruno.raki.core.domain.usecase.FetchAccountUseCase
 import javax.inject.Inject
 
 class FinishAuthorizationUseCase @Inject internal constructor(

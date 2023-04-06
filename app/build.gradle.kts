@@ -82,9 +82,11 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.androidx.composeBom))
+    implementation(libs.androidx.compose.material3.windowsizeclass)
 
     implementation(project(":core:design-system"))
     implementation(project(":core:data-repository"))
+    implementation(project(":core:domain-usecase"))
     implementation(project(":feature:auth"))
     implementation(project(":feature:timeline"))
 

@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import codes.bruno.raki.core.domain.model.Account
 import codes.bruno.raki.core.domain.usecase.FetchMastodonAppUseCase
-import codes.bruno.raki.core.domain.usecase.FinishAuthorizationUseCase
+import codes.bruno.raki.core.domain.usecase.auth.FinishAuthorizationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -8,12 +8,15 @@ import codes.bruno.raki.core.data.repository.model.asDomainModel
 import codes.bruno.raki.core.domain.model.CurrentUser
 import codes.bruno.raki.core.domain.model.MastodonApp
 import codes.bruno.raki.core.domain.repository.AuthDataRepository
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class AuthDataRepositoryImpl @Inject constructor(
     private val dataStore: AuthDataDataSource,
     private val mastodonApi: MastodonApiDataSource,
 ) : AuthDataRepository {
+
+    override val currentUserFlow = dataStore.currentUserFlow.map { it?.asDomainModel() }
 
     override suspend fun getMastodonApp(domain: String): MastodonApp? {
         return dataStore.getMastodonApp(domain)?.asDomainModel()

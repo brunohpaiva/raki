@@ -7,12 +7,16 @@ import codes.bruno.raki.core.data.datastore.model.MastodonApp
 import codes.bruno.raki.core.data.datastore.model.copy
 import codes.bruno.raki.core.data.datastore.model.currentUser
 import codes.bruno.raki.core.data.datastore.model.currentUserOrNull
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AuthDataDataSource @Inject constructor(
     private val dataStore: DataStore<AuthData>,
 ) {
+
+    val currentUserFlow: Flow<CurrentUser?> = dataStore.data.map { it.currentUserOrNull }
 
     suspend fun getMastodonApp(domain: String): MastodonApp? {
         return dataStore.data.first().appsMap[domain]
@@ -26,9 +30,7 @@ class AuthDataDataSource @Inject constructor(
         }
     }
 
-    suspend fun getCurrentUser(): CurrentUser? {
-        return dataStore.data.first().currentUserOrNull
-    }
+    suspend fun getCurrentUser() = currentUserFlow.first()
 
     suspend fun saveCurrentUser(
         domain: String,

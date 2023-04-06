@@ -2,8 +2,10 @@ package codes.bruno.raki.core.domain.repository
 
 import codes.bruno.raki.core.domain.model.CurrentUser
 import codes.bruno.raki.core.domain.model.MastodonApp
+import kotlinx.coroutines.flow.Flow
 
 interface AuthDataRepository {
+    val currentUserFlow: Flow<CurrentUser?>
     suspend fun getMastodonApp(domain: String): MastodonApp?
     suspend fun getCurrentUser(): CurrentUser?
     suspend fun createMastodonApp(
