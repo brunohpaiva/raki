@@ -8,6 +8,8 @@ class IsLoggedInFlowUseCase @Inject internal constructor(
     private val authDataRepository: AuthDataRepository,
 ) {
 
-    operator fun invoke() = authDataRepository.currentUserFlow.map { it != null }
+    operator fun invoke() = authDataRepository.currentUserFlow.map {
+        it?.accessToken?.isNotBlank() == true
+    }
 
 }
