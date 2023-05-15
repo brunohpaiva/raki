@@ -8,7 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 
 @Composable
 internal fun TimelineScreen() {
@@ -20,9 +21,16 @@ internal fun TimelineScreen() {
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(timeline, key = { it.id }) { status ->
-            if (status != null) {
-                TimelineStatus(status = status)
+        items(
+            count = timeline.itemCount,
+            key = timeline.itemKey { it.id },
+            contentType = timeline.itemContentType {
+                1 // TimelineStatus
+            },
+        ) { index ->
+            val item = timeline[index]
+            if (item != null) {
+                TimelineStatus(status = item)
             } else {
                 Text(text = "Loading...")
             }
