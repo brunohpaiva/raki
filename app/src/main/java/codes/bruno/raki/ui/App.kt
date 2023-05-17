@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
@@ -14,7 +13,6 @@ import androidx.navigation.compose.rememberNavController
 import codes.bruno.raki.feature.auth.LoginRoute
 import codes.bruno.raki.feature.timeline.TimelineRoute
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App(
     // TODO: implement UI for different form factors
