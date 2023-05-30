@@ -121,12 +121,12 @@ data class ImageMediaAttachmentMeta(
 
 @JsonClass(generateAdapter = true)
 data class VideoMediaAttachmentMeta(
-    val length: String,
-    val duration: Float,
-    val fps: Float,
-    val size: String,
-    val width: Int,
-    val height: Int,
+    val length: String?,
+    val duration: Float?,
+    val fps: Float?,
+    val size: String?,
+    val width: Int?,
+    val height: Int?,
 ) : MediaAttachmentMeta
 
 // TODO: gif meta
