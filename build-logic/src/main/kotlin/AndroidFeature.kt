@@ -16,6 +16,7 @@ class AndroidFeature : Plugin<Project> {
                 "implementation"(project(":core:domain-model"))
                 "implementation"(project(":core:domain-usecase"))
                 "implementation"(libs.lib("androidx.hilt.navigation.compose"))
+                "implementation"(libs.lib("androidx.lifecycle.runtime.compose"))
             }
         }
     }
