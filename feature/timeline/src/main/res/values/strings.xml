@@ -2,4 +2,6 @@
 <resources>
     <string name="user_avatar">User\'s avatar</string>
     <string name="status_media_attachment">Status media attachment</string>
+    <string name="home_timeline">Home</string>
+    <string name="local_timeline">Local</string>
 </resources>
