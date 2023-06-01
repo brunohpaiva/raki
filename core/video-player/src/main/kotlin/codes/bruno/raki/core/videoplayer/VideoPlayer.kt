@@ -42,9 +42,8 @@ fun VideoPlayer(
 
     LaunchedEffect(player, url) {
         player.setMediaItem(MediaItem.fromUri(url))
-        player.repeatMode = ExoPlayer.REPEAT_MODE_ONE
+        player.playWhenReady = true
         player.prepare()
-        player.play()
     }
 
     var playing by remember { mutableStateOf(false) }
@@ -65,16 +64,16 @@ fun VideoPlayer(
 
         onDispose {
             player.removeListener(listener)
+            player.release()
         }
     }
 
     Box(modifier = modifier) {
         AndroidView(
             factory = { viewContext ->
-                SurfaceView(viewContext)
-            },
-            update = {
-                player.setVideoSurfaceView(it)
+                SurfaceView(viewContext).also {
+                    player.setVideoSurfaceView(it)
+                }
             },
             modifier = Modifier.fillMaxSize(),
         )
