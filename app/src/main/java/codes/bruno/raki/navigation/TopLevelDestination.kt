@@ -5,10 +5,15 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.ui.graphics.vector.ImageVector
-import codes.bruno.raki.feature.timeline.TimelineRoute
+import codes.bruno.raki.feature.search.R as searchR
+import codes.bruno.raki.feature.search.SearchRoute
+import codes.bruno.raki.feature.timeline.HomeTimelineRoute
+import codes.bruno.raki.feature.timeline.LocalTimelineRoute
 import codes.bruno.raki.feature.timeline.R as timelineR
 
 internal enum class TopLevelDestination(
@@ -19,17 +24,23 @@ internal enum class TopLevelDestination(
 ) {
 
     HOME(
-        TimelineRoute, // TODO: create separated nav routes
+        HomeTimelineRoute,
         timelineR.string.home_timeline,
         DestinationIcon.Vector(Icons.Filled.Home),
         DestinationIcon.Vector(Icons.Outlined.Home),
     ),
     LOCAL(
-        TimelineRoute, // TODO: create separated nav routes
+        LocalTimelineRoute,
         timelineR.string.local_timeline,
         DestinationIcon.Vector(Icons.Filled.Person), // TODO: change to People icon
         DestinationIcon.Vector(Icons.Outlined.Person),
-    )
+    ),
+    SEARCH(
+        SearchRoute,
+        searchR.string.search,
+        DestinationIcon.Vector(Icons.Filled.Search),
+        DestinationIcon.Vector(Icons.Outlined.Search),
+    ),
 
 }
 

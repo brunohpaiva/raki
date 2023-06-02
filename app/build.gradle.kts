@@ -89,6 +89,7 @@ dependencies {
     implementation(project(":core:domain-usecase"))
     implementation(project(":feature:auth"))
     implementation(project(":feature:timeline"))
+    implementation(project(":feature:search"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

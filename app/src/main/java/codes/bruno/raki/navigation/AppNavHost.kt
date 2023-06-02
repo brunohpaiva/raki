@@ -5,7 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import codes.bruno.raki.feature.auth.authFeature
-import codes.bruno.raki.feature.timeline.navigateToTimeline
+import codes.bruno.raki.feature.search.searchFeature
+import codes.bruno.raki.feature.timeline.navigateToHomeTimeline
 import codes.bruno.raki.feature.timeline.timelineFeature
 
 @Composable
@@ -21,10 +22,11 @@ internal fun AppNavHost(
     ) {
         authFeature(
             onFinishAuth = {
-                navController.navigateToTimeline()
+                navController.navigateToHomeTimeline()
             },
         )
 
         timelineFeature()
+        searchFeature()
     }
 }

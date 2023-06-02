@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import codes.bruno.raki.feature.auth.LoginRoute
-import codes.bruno.raki.feature.timeline.TimelineRoute
+import codes.bruno.raki.feature.timeline.HomeTimelineRoute
 import codes.bruno.raki.navigation.TopLevelDestination
 
 @Stable
@@ -22,7 +22,7 @@ internal class AppState(
 
     val startDestination: String
         get() = if (isLoggedIn) {
-            TimelineRoute
+            HomeTimelineRoute
         } else {
             LoginRoute
         }
