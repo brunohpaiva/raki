@@ -16,6 +16,13 @@ dependencyResolutionManagement {
 rootProject.name = "raki"
 
 includeBuild("build-logic")
+
+includeBuild("m3-pullrefresh") {
+    dependencySubstitution {
+        substitute(module("me.omico.lux:lux-androidx-compose-material3-pullrefresh")).using(project(":library"))
+    }
+}
+
 include(":app")
 include(":core:design-system")
 include(":core:domain-model")

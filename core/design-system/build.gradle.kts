@@ -14,6 +14,7 @@ dependencies {
 
     api(libs.androidx.compose.material3)
     api(libs.androidx.compose.ui.tooling)
+    api(libs.omico.m3PullRefresh)
 
     api(libs.coil.compose)
 }

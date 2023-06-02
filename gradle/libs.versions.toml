@@ -80,6 +80,8 @@ coil-base = { group = "io.coil-kt", name = "coil-base", version.ref = "coil" }
 coil-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coil" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose-base", version.ref = "coil" }
 
+omico-m3PullRefresh = { group = "me.omico.lux", name = "lux-androidx-compose-material3-pullrefresh" }
+
 [bundles]
 compose = [
     "androidx-compose-ui",

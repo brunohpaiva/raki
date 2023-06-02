@@ -12,6 +12,12 @@
                   <project path="$PROJECT_DIR$/build-logic" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/m3-pullrefresh" name="androidx-compose-material3-pullrefresh">
+                <projects>
+                  <project path="$PROJECT_DIR$/m3-pullrefresh" />
+                  <project path="$PROJECT_DIR$/m3-pullrefresh/library" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -38,6 +44,8 @@
             <option value="$PROJECT_DIR$/feature/auth" />
             <option value="$PROJECT_DIR$/feature/search" />
             <option value="$PROJECT_DIR$/feature/timeline" />
+            <option value="$PROJECT_DIR$/m3-pullrefresh" />
+            <option value="$PROJECT_DIR$/m3-pullrefresh/library" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -44,18 +44,22 @@ internal class TimelineViewModel @Inject constructor(
 ) : ViewModel() {
 
     val timeline = fetchTimelineUseCase()
-        .map { it.map(::mapToUiModel) }
+        .map { pagingData ->
+            val currentTime = OffsetDateTime.now()
+            pagingData.map { mapToUiModel(it, currentTime) }
+        }
         .cachedIn(viewModelScope)
 
-    private suspend fun mapToUiModel(status: TimelineStatus): TimelineStatusUi {
+    private suspend fun mapToUiModel(
+        status: TimelineStatus,
+        currentTime: OffsetDateTime,
+    ): TimelineStatusUi {
         return TimelineStatusUi(
             id = status.id,
             authorAvatarUrl = status.authorAvatarUrl,
             authorDisplayName = status.authorDisplayName,
             authorAcct = status.authorAcct,
-            relativeCreatedAt = formatRelativeDateTimeUseCase(
-                status.createdAt, OffsetDateTime.now()
-            ),
+            relativeCreatedAt = formatRelativeDateTimeUseCase(status.createdAt, currentTime),
             content = parseContent(status.content),
             mediaAttachments = status.mediaAttachments.map {
                 StatusMediaAttachmentUi(
