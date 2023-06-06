@@ -12,6 +12,11 @@ data class TimelineStatus(
     )
     val author: Account,
     @Relation(
+        parentColumn = "reblogged_by_author_id",
+        entityColumn = "id",
+    )
+    val reblogAuthor: Account?,
+    @Relation(
         parentColumn = "id",
         entityColumn = "status_id",
     )

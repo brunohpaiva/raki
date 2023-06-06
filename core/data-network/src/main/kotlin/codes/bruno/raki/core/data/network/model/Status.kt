@@ -18,6 +18,7 @@ data class Status(
     val reblogs_count: Int,
     val favourites_count: Int,
     val replies_count: Int,
+    val reblog: Status? = null,
 )
 
 @JsonClass(generateAdapter = false)

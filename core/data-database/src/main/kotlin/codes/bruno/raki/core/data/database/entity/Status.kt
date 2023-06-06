@@ -13,8 +13,13 @@ import java.time.OffsetDateTime
     tableName = "status",
     foreignKeys = [
         ForeignKey(childColumns = ["author_id"], parentColumns = ["id"], entity = Account::class),
+        ForeignKey(
+            childColumns = ["reblogged_by_author_id"],
+            parentColumns = ["id"],
+            entity = Account::class,
+        ),
     ],
-    indices = [Index("author_id")],
+    indices = [Index("author_id"), Index("reblogged_by_author_id")],
 )
 data class Status(
     @PrimaryKey
@@ -34,6 +39,10 @@ data class Status(
     val favouritesCount: Int,
     @ColumnInfo(name = "replies_count")
     val repliesCount: Int,
+    @ColumnInfo(name = "reblogged_status_id")
+    val rebloggedStatusId: String? = null,
+    @ColumnInfo(name = "reblogged_by_author_id")
+    val rebloggedByAuthorId: String? = null,
 )
 
 enum class Visibility(val id: Int) {

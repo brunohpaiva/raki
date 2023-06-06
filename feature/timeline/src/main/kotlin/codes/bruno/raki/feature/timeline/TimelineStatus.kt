@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,13 +36,29 @@ import codes.bruno.raki.core.designsystem.R as DesignSystemR
 
 @Composable
 internal fun TimelineStatus(
-    modifier: Modifier = Modifier,
     status: TimelineStatusUi,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier,
     ) {
+        if (status.rebloggerDisplayName != null) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Bolt,
+                    contentDescription = null,
+                )
+
+                Text(
+                    text = status.rebloggerDisplayName,
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                )
+            }
+        }
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -186,6 +205,9 @@ private fun TimelineStatusPreview() {
                 authorAvatarUrl = "",
                 authorDisplayName = "Bruno Henrique Paiva",
                 authorAcct = "bruno@androiddev.social",
+                rebloggerAvatarUrl = null,
+                rebloggerDisplayName = null,
+                rebloggerAcct = null,
                 relativeCreatedAt = "38m",
                 content = buildAnnotatedString {
                     append("This is a #mastodon status example")

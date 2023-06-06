@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b6630f5f88ff82a75aaf877e29cba36e",
+    "identityHash": "bbc96d090348a1a9f135b7eff604ee4f",
     "entities": [
       {
         "tableName": "account",
@@ -56,7 +56,7 @@
       },
       {
         "tableName": "status",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `uri` TEXT NOT NULL, `created_at` TEXT NOT NULL, `author_id` TEXT NOT NULL, `content` TEXT NOT NULL, `visibility` INTEGER NOT NULL, `sensitive` INTEGER NOT NULL, `reblogs_count` INTEGER NOT NULL, `favourites_count` INTEGER NOT NULL, `replies_count` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`author_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `uri` TEXT NOT NULL, `created_at` TEXT NOT NULL, `author_id` TEXT NOT NULL, `content` TEXT NOT NULL, `visibility` INTEGER NOT NULL, `sensitive` INTEGER NOT NULL, `reblogs_count` INTEGER NOT NULL, `favourites_count` INTEGER NOT NULL, `replies_count` INTEGER NOT NULL, `reblogged_status_id` TEXT, `reblogged_by_author_id` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`author_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`reblogged_by_author_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -117,6 +117,18 @@
             "columnName": "replies_count",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "rebloggedStatusId",
+            "columnName": "reblogged_status_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rebloggedByAuthorId",
+            "columnName": "reblogged_by_author_id",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -134,6 +146,15 @@
             ],
             "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_status_author_id` ON `${TABLE_NAME}` (`author_id`)"
+          },
+          {
+            "name": "index_status_reblogged_by_author_id",
+            "unique": false,
+            "columnNames": [
+              "reblogged_by_author_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_status_reblogged_by_author_id` ON `${TABLE_NAME}` (`reblogged_by_author_id`)"
           }
         ],
         "foreignKeys": [
@@ -143,6 +164,17 @@
             "onUpdate": "NO ACTION",
             "columns": [
               "author_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "account",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "reblogged_by_author_id"
             ],
             "referencedColumns": [
               "id"
@@ -229,7 +261,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b6630f5f88ff82a75aaf877e29cba36e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bbc96d090348a1a9f135b7eff604ee4f')"
     ]
   }
 }

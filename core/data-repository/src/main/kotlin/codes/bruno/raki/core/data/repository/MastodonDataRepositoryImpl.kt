@@ -11,12 +11,16 @@ import androidx.paging.RemoteMediator
 import androidx.paging.map
 import codes.bruno.raki.core.data.database.TimelineDataSource
 import codes.bruno.raki.core.data.network.MastodonApiDataSource
+import codes.bruno.raki.core.data.network.model.Timeline
 import codes.bruno.raki.core.data.repository.model.asDatabaseModel
 import codes.bruno.raki.core.data.repository.model.asDomainModel
 import codes.bruno.raki.core.domain.repository.MastodonDataRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import codes.bruno.raki.core.data.database.entity.Account as DatabaseAccount
+import codes.bruno.raki.core.data.database.entity.Status as DatabaseStatus
+import codes.bruno.raki.core.data.database.entity.StatusMediaAttachment as DatabaseStatusMediaAttachment
 import codes.bruno.raki.core.data.database.entity.TimelineStatus as DatabaseTimelineStatus
 import codes.bruno.raki.core.domain.model.Account as DomainAccount
 import codes.bruno.raki.core.domain.model.TimelineStatus as DomainTimelineStatus
@@ -89,14 +93,7 @@ class TimelineRemoteMediator(
         )
         Log.d("Raki", "RemoteMediator > prevKey ${timeline.prevKey} nextKey ${timeline.nextKey}")
 
-        dataSource.save(
-            statuses = timeline.statuses.map { it.asDatabaseModel() },
-            mediaAttachments = timeline.statuses.flatMap { status ->
-                status.media_attachments.map { it.asDatabaseModel(status.id) }
-            },
-            accounts = timeline.statuses.map { it.account.asDatabaseModel() },
-            clearOld = loadType == LoadType.REFRESH,
-        )
+        save(timeline, loadType == LoadType.REFRESH)
 
         return MediatorResult.Success(
             endOfPaginationReached = when (loadType) {
@@ -104,6 +101,48 @@ class TimelineRemoteMediator(
                 LoadType.PREPEND -> timeline.nextKey == null
                 LoadType.APPEND -> timeline.prevKey == null
             },
+        )
+    }
+
+    private suspend fun save(timeline: Timeline, clearOld: Boolean) {
+        val statuses = mutableListOf<DatabaseStatus>()
+        val mediaAttachments = mutableListOf<DatabaseStatusMediaAttachment>()
+        val accounts = mutableListOf<DatabaseAccount>()
+
+        for (status in timeline.statuses) {
+            val reblog = status.reblog
+
+            statuses += if (reblog == null) {
+                status.asDatabaseModel()
+            } else {
+                reblog.asDatabaseModel().copy(
+                    id = status.id,
+                    rebloggedStatusId = reblog.id,
+                    rebloggedByAuthorId = status.account.id,
+                )
+            }
+
+            for (mediaAttachment in status.media_attachments) {
+                mediaAttachments += mediaAttachment.asDatabaseModel(status.id)
+            }
+
+            accounts += status.account.asDatabaseModel()
+
+            if (reblog != null) {
+                // TODO: better way to handle attachments of reblogged statuses
+                for (mediaAttachment in reblog.media_attachments) {
+                    mediaAttachments += mediaAttachment.asDatabaseModel(reblog.id)
+                }
+
+                accounts += reblog.account.asDatabaseModel()
+            }
+        }
+
+        dataSource.save(
+            statuses = statuses,
+            mediaAttachments = mediaAttachments,
+            accounts = accounts,
+            clearOld = clearOld,
         )
     }
 

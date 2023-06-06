@@ -10,7 +10,6 @@ android {
 dependencies {
     implementation(project(":core:design-system"))
 
-    implementation(libs.androidx.compose.material.iconsextended)
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.exoplayer.dash)
 }
