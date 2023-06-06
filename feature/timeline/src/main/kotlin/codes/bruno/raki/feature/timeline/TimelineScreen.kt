@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.material3.pullrefresh.PullRefreshIndicator
 import androidx.compose.material3.pullrefresh.pullRefresh
@@ -44,7 +46,7 @@ internal fun TimelineScreen() {
             .pullRefresh(pullRefreshState),
     ) {
         LazyColumn(
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(
@@ -55,10 +57,18 @@ internal fun TimelineScreen() {
                 },
             ) { index ->
                 val item = timeline[index]
+
                 if (item != null) {
-                    TimelineStatus(status = item)
+                    TimelineStatus(
+                        status = item,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                    )
                 } else {
                     Text(text = "Loading...")
+                }
+
+                if (index < timeline.itemCount - 1) {
+                    Divider(Modifier.padding(top = 8.dp))
                 }
             }
         }
