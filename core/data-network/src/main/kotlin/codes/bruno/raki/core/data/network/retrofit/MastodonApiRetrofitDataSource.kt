@@ -14,6 +14,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.io.IOException
 import javax.inject.Inject
@@ -53,6 +54,16 @@ internal interface MastodonApiService {
         @Query("max_id") maxId: String? = null,
         @Query("since_id") sinceId: String? = null,
     ): Response<List<Status>>
+
+    @POST("api/v1/statuses/{id}/favourite")
+    suspend fun favouriteStatus(
+        @Path("id") id: String,
+    ): Status
+
+    @POST("api/v1/statuses/{id}/unfavourite")
+    suspend fun unfavouriteStatus(
+        @Path("id") id: String,
+    ): Status
 
 }
 
@@ -122,6 +133,14 @@ internal class MastodonApiRetrofitDataSource @Inject constructor(
             prevKey = pagingKeys.first,
             nextKey = pagingKeys.second,
         )
+    }
+
+    override suspend fun favouriteStatus(id: String): Status {
+        return service.favouriteStatus(id)
+    }
+
+    override suspend fun unfavouriteStatus(id: String): Status {
+        return service.unfavouriteStatus(id)
     }
 
     private companion object {

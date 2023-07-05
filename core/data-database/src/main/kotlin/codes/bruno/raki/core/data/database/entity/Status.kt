@@ -43,6 +43,8 @@ data class Status(
     val rebloggedStatusId: String? = null,
     @ColumnInfo(name = "reblogged_by_author_id")
     val rebloggedByAuthorId: String? = null,
+    @ColumnInfo(name = "favourited")
+    val favourited: Boolean,
 )
 
 enum class Visibility(val id: Int) {

@@ -18,6 +18,10 @@ class TimelineDataSource @Inject internal constructor(
         return TimelineStatusPagingSource(db, dao)
     }
 
+    suspend fun isStatusFavourited(id: String): Boolean {
+        return dao.isStatusFavourited(id)
+    }
+
     suspend fun save(
         statuses: List<Status>,
         mediaAttachments: List<StatusMediaAttachment>,

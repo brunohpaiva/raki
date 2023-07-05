@@ -18,6 +18,7 @@ data class TimelineStatus(
     val reblogsCount: Int,
     val favouritesCount: Int,
     val repliesCount: Int,
+    val favourited: Boolean,
 )
 
 enum class Visibility {

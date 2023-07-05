@@ -4,13 +4,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.Repeat
+import androidx.compose.material.icons.filled.Reply
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,6 +43,10 @@ import codes.bruno.raki.core.designsystem.R as DesignSystemR
 @Composable
 internal fun TimelineStatus(
     status: TimelineStatusUi,
+    onClickReply: () -> Unit,
+    onClickBoost: () -> Unit,
+    onClickFavourite: () -> Unit,
+    onClickBookmark: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -48,7 +58,7 @@ internal fun TimelineStatus(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Bolt,
+                    imageVector = Icons.Filled.Repeat,
                     contentDescription = null,
                 )
 
@@ -91,6 +101,14 @@ internal fun TimelineStatus(
         )
 
         MediaAttachments(attachments = status.mediaAttachments)
+
+        Interactions(
+            status = status,
+            onClickReply = onClickReply,
+            onClickBoost = onClickBoost,
+            onClickFavourite = onClickFavourite,
+            onClickBookmark = onClickBookmark,
+        )
     }
 }
 
@@ -195,6 +213,45 @@ private fun VideoAttachment(
     )
 }
 
+@Composable
+private fun Interactions(
+    status: TimelineStatusUi,
+    onClickReply: () -> Unit,
+    onClickBoost: () -> Unit,
+    onClickFavourite: () -> Unit,
+    onClickBookmark: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        // TODO: add content descriptions
+
+        IconButton(onClick = onClickReply, enabled = false) {
+            Icon(imageVector = Icons.Filled.Reply, contentDescription = null)
+        }
+
+        IconButton(onClick = onClickBoost, enabled = false) {
+            Icon(imageVector = Icons.Filled.Repeat, contentDescription = null)
+        }
+
+        IconButton(onClick = onClickFavourite) {
+            Icon(
+                imageVector = if (!status.favourited)
+                    Icons.Filled.StarBorder
+                else
+                    Icons.Filled.Star,
+                contentDescription = null,
+            )
+        }
+
+        IconButton(onClick = onClickBookmark, enabled = false) {
+            Icon(imageVector = Icons.Filled.BookmarkBorder, contentDescription = null)
+        }
+    }
+}
+
 @Preview
 @Composable
 private fun TimelineStatusPreview() {
@@ -213,7 +270,12 @@ private fun TimelineStatusPreview() {
                     append("This is a #mastodon status example")
                 },
                 mediaAttachments = emptyList(),
-            )
+                favourited = false,
+            ),
+            onClickReply = {},
+            onClickBoost = {},
+            onClickFavourite = {},
+            onClickBookmark = {},
         )
     }
 }

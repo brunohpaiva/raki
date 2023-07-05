@@ -3,6 +3,7 @@ package codes.bruno.raki.core.data.network
 import codes.bruno.raki.core.data.network.model.Account
 import codes.bruno.raki.core.data.network.model.MastodonApp
 import codes.bruno.raki.core.data.network.model.OAuthToken
+import codes.bruno.raki.core.data.network.model.Status
 import codes.bruno.raki.core.data.network.model.Timeline
 
 interface MastodonApiDataSource {
@@ -33,5 +34,13 @@ interface MastodonApiDataSource {
         maxId: String? = null,
         sinceId: String? = null,
     ): Timeline
+
+    suspend fun favouriteStatus(
+        id: String,
+    ): Status
+
+    suspend fun unfavouriteStatus(
+        id: String,
+    ): Status
 
 }

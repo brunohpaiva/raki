@@ -16,6 +16,7 @@ fun NetworkStatus.asDatabaseModel() = DatabaseStatus(
     reblogsCount = reblogs_count,
     favouritesCount = favourites_count,
     repliesCount = replies_count,
+    favourited = favourited,
 )
 
 fun NetworkVisibility.asDatabaseModel() = when (this) {

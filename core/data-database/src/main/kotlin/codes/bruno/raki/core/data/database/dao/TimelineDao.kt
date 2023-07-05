@@ -24,6 +24,9 @@ internal interface TimelineDao {
     @Query("SELECT * FROM status WHERE id > :key LIMIT :limit")
     suspend fun listNewer(key: String, limit: Int): List<TimelineStatus>
 
+    @Query("SELECT favourited FROM status WHERE id = :id")
+    suspend fun isStatusFavourited(id: String): Boolean
+
     @Upsert
     suspend fun save(
         statuses: List<Status>,

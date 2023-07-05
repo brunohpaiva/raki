@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bbc96d090348a1a9f135b7eff604ee4f",
+    "identityHash": "0c8a1b8d10b555ae067ca6b7c672ca16",
     "entities": [
       {
         "tableName": "account",
@@ -56,7 +56,7 @@
       },
       {
         "tableName": "status",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `uri` TEXT NOT NULL, `created_at` TEXT NOT NULL, `author_id` TEXT NOT NULL, `content` TEXT NOT NULL, `visibility` INTEGER NOT NULL, `sensitive` INTEGER NOT NULL, `reblogs_count` INTEGER NOT NULL, `favourites_count` INTEGER NOT NULL, `replies_count` INTEGER NOT NULL, `reblogged_status_id` TEXT, `reblogged_by_author_id` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`author_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`reblogged_by_author_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `uri` TEXT NOT NULL, `created_at` TEXT NOT NULL, `author_id` TEXT NOT NULL, `content` TEXT NOT NULL, `visibility` INTEGER NOT NULL, `sensitive` INTEGER NOT NULL, `reblogs_count` INTEGER NOT NULL, `favourites_count` INTEGER NOT NULL, `replies_count` INTEGER NOT NULL, `reblogged_status_id` TEXT, `reblogged_by_author_id` TEXT, `favourited` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`author_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`reblogged_by_author_id`) REFERENCES `account`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -129,6 +129,12 @@
             "columnName": "reblogged_by_author_id",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "favourited",
+            "columnName": "favourited",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -261,7 +267,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bbc96d090348a1a9f135b7eff604ee4f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0c8a1b8d10b555ae067ca6b7c672ca16')"
     ]
   }
 }
