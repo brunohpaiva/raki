@@ -14,4 +14,5 @@ interface MastodonDataRepository {
         sinceId: String? = null,
     ): Flow<PagingData<TimelineStatus>>
     suspend fun toggleStatusFavourite(id: String)
+    suspend fun toggleStatusBookmark(id: String)
 }

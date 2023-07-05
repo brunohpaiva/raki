@@ -66,7 +66,9 @@ internal fun TimelineScreen() {
                         onClickFavourite = {
                             viewModel.toggleFavourite(item.id)
                         },
-                        onClickBookmark = {},
+                        onClickBookmark = {
+                            viewModel.toggleBookmark(item.id)
+                        },
                         modifier = Modifier.padding(horizontal = 16.dp),
                     )
                 } else {

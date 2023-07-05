@@ -43,4 +43,12 @@ interface MastodonApiDataSource {
         id: String,
     ): Status
 
+    suspend fun bookmarkStatus(
+        id: String,
+    ): Status
+
+    suspend fun unbookmarkStatus(
+        id: String,
+    ): Status
+
 }

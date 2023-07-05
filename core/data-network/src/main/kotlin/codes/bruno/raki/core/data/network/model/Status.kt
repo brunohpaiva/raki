@@ -20,6 +20,7 @@ data class Status(
     val replies_count: Int,
     val reblog: Status? = null,
     val favourited: Boolean, // TODO: check if this should be nullable
+    val bookmarked: Boolean, // TODO: check if this should be nullable
 )
 
 @JsonClass(generateAdapter = false)

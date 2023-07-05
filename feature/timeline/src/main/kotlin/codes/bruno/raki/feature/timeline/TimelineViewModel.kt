@@ -30,6 +30,7 @@ import codes.bruno.raki.core.domain.model.MediaAttachmentType
 import codes.bruno.raki.core.domain.model.TimelineStatus
 import codes.bruno.raki.core.domain.usecase.FetchTimelineUseCase
 import codes.bruno.raki.core.domain.usecase.FormatRelativeDateTimeUseCase
+import codes.bruno.raki.core.domain.usecase.ToggleStatusBookmarkUseCase
 import codes.bruno.raki.core.domain.usecase.ToggleStatusFavouriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +45,7 @@ internal class TimelineViewModel @Inject constructor(
     fetchTimelineUseCase: FetchTimelineUseCase,
     private val formatRelativeDateTimeUseCase: FormatRelativeDateTimeUseCase,
     private val toggleStatusFavouriteUseCase: ToggleStatusFavouriteUseCase,
+    private val toggleStatusBookmarkUseCase: ToggleStatusBookmarkUseCase,
 ) : ViewModel() {
 
     val timeline = fetchTimelineUseCase()
@@ -55,6 +57,10 @@ internal class TimelineViewModel @Inject constructor(
 
     fun toggleFavourite(statusId: String) = viewModelScope.launch {
         toggleStatusFavouriteUseCase(statusId)
+    }
+
+    fun toggleBookmark(statusId: String) = viewModelScope.launch {
+        toggleStatusBookmarkUseCase(statusId)
     }
 
     private suspend fun mapToUiModel(
@@ -81,6 +87,7 @@ internal class TimelineViewModel @Inject constructor(
                 )
             },
             favourited = status.favourited,
+            bookmarked = status.bookmarked,
         )
     }
 
@@ -152,6 +159,7 @@ internal data class TimelineStatusUi(
     val content: AnnotatedString,
     val mediaAttachments: List<StatusMediaAttachmentUi>,
     val favourited: Boolean,
+    val bookmarked: Boolean,
 )
 
 internal data class StatusMediaAttachmentUi(

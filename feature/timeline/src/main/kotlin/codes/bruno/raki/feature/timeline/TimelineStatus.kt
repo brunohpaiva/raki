@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Repeat
 import androidx.compose.material.icons.filled.Reply
@@ -246,8 +247,14 @@ private fun Interactions(
             )
         }
 
-        IconButton(onClick = onClickBookmark, enabled = false) {
-            Icon(imageVector = Icons.Filled.BookmarkBorder, contentDescription = null)
+        IconButton(onClick = onClickBookmark) {
+            Icon(
+                imageVector = if (!status.bookmarked)
+                    Icons.Filled.BookmarkBorder
+                else
+                    Icons.Filled.Bookmark,
+                contentDescription = null,
+            )
         }
     }
 }
@@ -271,6 +278,7 @@ private fun TimelineStatusPreview() {
                 },
                 mediaAttachments = emptyList(),
                 favourited = false,
+                bookmarked = false,
             ),
             onClickReply = {},
             onClickBoost = {},

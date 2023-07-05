@@ -27,6 +27,7 @@ fun DatabaseTimelineStatus.asDomainModel() = DomainTimelineStatus(
     favouritesCount = status.favouritesCount,
     repliesCount = status.repliesCount,
     favourited = status.favourited,
+    bookmarked = status.bookmarked,
 )
 
 fun DatabaseVisibility.asDomainModel(): DomainVisibility = when (this) {

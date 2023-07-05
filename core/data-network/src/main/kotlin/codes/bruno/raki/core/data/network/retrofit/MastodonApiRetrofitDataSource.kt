@@ -65,6 +65,16 @@ internal interface MastodonApiService {
         @Path("id") id: String,
     ): Status
 
+    @POST("api/v1/statuses/{id}/bookmark")
+    suspend fun bookmarkStatus(
+        @Path("id") id: String,
+    ): Status
+
+    @POST("api/v1/statuses/{id}/unbookmark")
+    suspend fun unbookmarkStatus(
+        @Path("id") id: String,
+    ): Status
+
 }
 
 @Singleton
@@ -141,6 +151,14 @@ internal class MastodonApiRetrofitDataSource @Inject constructor(
 
     override suspend fun unfavouriteStatus(id: String): Status {
         return service.unfavouriteStatus(id)
+    }
+
+    override suspend fun bookmarkStatus(id: String): Status {
+        return service.bookmarkStatus(id)
+    }
+
+    override suspend fun unbookmarkStatus(id: String): Status {
+        return service.unbookmarkStatus(id)
     }
 
     private companion object {

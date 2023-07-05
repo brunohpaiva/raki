@@ -27,6 +27,9 @@ internal interface TimelineDao {
     @Query("SELECT favourited FROM status WHERE id = :id")
     suspend fun isStatusFavourited(id: String): Boolean
 
+    @Query("SELECT bookmarked FROM status WHERE id = :id")
+    suspend fun isStatusBookmarked(id: String): Boolean
+
     @Upsert
     suspend fun save(
         statuses: List<Status>,

@@ -22,6 +22,10 @@ class TimelineDataSource @Inject internal constructor(
         return dao.isStatusFavourited(id)
     }
 
+    suspend fun isStatusBookmarked(id: String): Boolean {
+        return dao.isStatusBookmarked(id)
+    }
+
     suspend fun save(
         statuses: List<Status>,
         mediaAttachments: List<StatusMediaAttachment>,

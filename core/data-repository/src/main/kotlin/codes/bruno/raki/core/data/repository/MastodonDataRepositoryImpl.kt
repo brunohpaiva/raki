@@ -55,6 +55,15 @@ internal class MastodonDataRepositoryImpl @Inject constructor(
         saveStatuses(listOf(networkStatus), clearOld = false)
     }
 
+    override suspend fun toggleStatusBookmark(id: String) {
+        val networkStatus = if (!timelineDataSource.isStatusBookmarked(id))
+            mastodonApi.bookmarkStatus(id)
+        else
+            mastodonApi.unbookmarkStatus(id)
+
+        saveStatuses(listOf(networkStatus), clearOld = false)
+    }
+
     private suspend fun saveStatuses(
         statuses: List<NetworkStatus>,
         clearOld: Boolean,
