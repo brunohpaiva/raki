@@ -13,12 +13,12 @@ androidx-datastore = "1.0.0"
 androidx-room = "2.5.2"
 androidx-browser = "1.5.0"
 androidx-paging = "3.2.0-rc01"
-androidx-media3 = "1.0.2"
+androidx-media3 = "1.1.0"
 
 androidx-composeBom = "2023.06.01"
 androidx-compose-compiler = "1.4.8"
 
-hilt = "2.46.1"
+hilt = "2.47"
 retrofit = "2.9.0"
 okhttp = "4.11.0" # retrofit2 uses okhttp 3.14.9, but we are using 4.10.0 for the logging interceptor
 moshi = "1.15.0"
