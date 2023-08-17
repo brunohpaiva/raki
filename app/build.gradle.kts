@@ -6,14 +6,16 @@ plugins {
     id("raki.android.hilt")
 }
 
+val composeCompilerVersion: String = libs.versions.androidx.compose.compiler.get()
+
 android {
     namespace = "codes.bruno.raki"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "codes.bruno.raki"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -65,7 +67,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 
     packaging {

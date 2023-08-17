@@ -20,10 +20,11 @@ dependencies {
     api(libs.protobuf)
 }
 
+val protocVersion: String = libs.versions.protobuf.get()
+
 protobuf {
     protoc {
-        // TODO: find a way to fetch via version catalog without affecting Gradle performance
-        artifact = "com.google.protobuf:protoc:3.23.2"
+        artifact = "com.google.protobuf:protoc:$protocVersion"
     }
 
     generateProtoTasks {
